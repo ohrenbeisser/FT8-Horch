@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>FT8-Horch</title>
+<meta name="description" content="FT8 mit dehnbarer Zeit und einstellbarem Tonabstand">
+<meta name="theme-color" content="#c0001a">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/logo.svg" type="image/svg+xml">
+<link rel="icon" href="icons/favicon-32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="stylesheet" href="theme.css">
+</head>
+<body>
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+<symbol id="i-forum" viewBox="0 -960 960 960"><path d="M880-81 721-240H300q-24.75 0-42.37-17.63Q240-275.25 240-300v-80h440q24.75 0 42.38-17.63Q740-415.25 740-440v-280h80q24.75 0 42.38 17.62Q880-684.75 880-660v579ZM140-425l75-75h405v-320H140v395ZM80-280v-540q0-24.75 17.63-42.38Q115.25-880 140-880h480q24.75 0 42.38 17.62Q680-844.75 680-820v320q0 24.75-17.62 42.37Q644.75-440 620-440H240L80-280Zm60-220v-320 320Z"/></symbol>
+<symbol id="i-science" viewBox="0 -960 960 960"><path d="M172-120q-41.78 0-59.39-39T124-230l248-280v-270h-52q-12.75 0-21.37-8.68-8.63-8.67-8.63-21.5 0-12.82 8.63-21.32 8.62-8.5 21.37-8.5h320q12.75 0 21.38 8.68 8.62 8.67 8.62 21.5 0 12.82-8.62 21.32-8.63 8.5-21.38 8.5h-52v270l248 280q29 32 11.39 71T788-120H172Zm-12-60h640L528-488v-292h-96v292L160-180Zm318-300Z"/></symbol>
+<symbol id="i-history" viewBox="0 -960 960 960"><path d="M477-120q-149 0-253-105.5T120-481h60q0 125 86 213t211 88q127 0 215-89t88-216q0-124-89-209.5T477-780q-68 0-127.5 31T246-667h105v60H142v-208h60v106q52-61 123.5-96T477-840q75 0 141 28t115.5 76.5Q783-687 811.5-622T840-482q0 75-28.5 141t-78 115Q684-177 618-148.5T477-120Zm128-197L451-469v-214h60v189l137 134-43 43Z"/></symbol>
+<symbol id="i-settings" viewBox="0 -960 960 960"><path d="m388-80-20-126q-19-7-40-19t-37-25l-118 54-93-164 108-79q-2-9-2.5-20.5T185-480q0-9 .5-20.5T188-521L80-600l93-164 118 54q16-13 37-25t40-18l20-127h184l20 126q19 7 40.5 18.5T669-710l118-54 93 164-108 77q2 10 2.5 21.5t.5 21.5q0 10-.5 21t-2.5 21l108 78-93 164-118-54q-16 13-36.5 25.5T592-206L572-80H388Zm48-60h88l14-112q33-8 62.5-25t53.5-41l106 46 40-72-94-69q4-17 6.5-33.5T715-480q0-17-2-33.5t-7-33.5l94-69-40-72-106 46q-23-26-52-43.5T538-708l-14-112h-88l-14 112q-34 7-63.5 24T306-642l-106-46-40 72 94 69q-4 17-6.5 33.5T245-480q0 17 2.5 33.5T254-413l-94 69 40 72 106-46q24 24 53.5 41t62.5 25l14 112Zm44-210q54 0 92-38t38-92q0-54-38-92t-92-38q-54 0-92 38t-38 92q0 54 38 92t92 38Zm0-130Z"/></symbol>
+<symbol id="i-mic" viewBox="0 -960 960 960"><path d="M408-453.92q-29-30.91-29-75.08v-251q0-41.67 29.44-70.83Q437.88-880 479.94-880t71.56 29.17Q581-821.67 581-780v251q0 44.17-29 75.08Q523-423 480-423t-72-30.92ZM480-651Zm-30 531v-136q-106-11-178-89t-72-184h60q0 91 64.29 153t155.5 62q91.21 0 155.71-62Q700-438 700-529h60q0 106-72 184t-178 89v136h-60Zm59.5-376.5Q521-510 521-529v-251q0-17-11.79-28.5T480-820q-17.42 0-29.21 11.5T439-780v251q0 19 11.5 32.5T480-483q18 0 29.5-13.5Z"/></symbol>
+<symbol id="i-mic_off" viewBox="0 -960 960 960"><path d="m686-361-43-43q21-26 31-58.5t10-66.5h60q0 46-15 89t-43 79ZM461-586Zm97 97-53-52v-238q0-17-12-29t-29-12q-17 0-29 12t-12 29v155l-60-60v-95q0-42 29.5-71.5T464-880q42 0 71.5 29.5T565-779v250q0 8-1.5 20t-5.5 20ZM434-120v-136q-106-11-178-89t-72-184h60q0 91 64.5 153T464-314q38 0 73-12.5t64-34.5l43 43q-31 26-69 41.5T494-256v136h-60Zm397 65L36-850l38-38L869-93l-38 38Z"/></symbol>
+<symbol id="i-stop" viewBox="0 -960 960 960"><path d="M300-660v360-360Zm-60 420v-480h480v480H240Zm60-60h360v-360H300v360Z"/></symbol>
+<symbol id="i-campaign" viewBox="0 -960 960 960"><path d="M730-450v-60h150v60H730Zm50 290-121-90 36-48 121 90-36 48Zm-82-503-36-48 118-89 36 48-118 89ZM210-200v-160h-70q-24.75 0-42.37-17.63Q80-395.25 80-420v-120q0-24.75 17.63-42.38Q115.25-600 140-600h180l200-120v480L320-360h-50v160h-60Zm250-146v-268l-124 74H140v120h196l124 74Zm100 0v-268q27 24 43.5 58.5T620-480q0 41-16.5 75.5T560-346ZM300-480Z"/></symbol>
+<symbol id="i-download" viewBox="0 -960 960 960"><path d="M480-313 287-506l43-43 120 120v-371h60v371l120-120 43 43-193 193ZM220-160q-24 0-42-18t-18-42v-143h60v143h520v-143h60v143q0 24-18 42t-42 18H220Z"/></symbol>
+<symbol id="i-upload" viewBox="0 -960 960 960"><path d="M450-313v-371L330-564l-43-43 193-193 193 193-43 43-120-120v371h-60ZM220-160q-24 0-42-18t-18-42v-143h60v143h520v-143h60v143q0 24-18 42t-42 18H220Z"/></symbol>
+<symbol id="i-delete" viewBox="0 -960 960 960"><path d="M261-120q-24.75 0-42.37-17.63Q201-155.25 201-180v-570h-41v-60h188v-30h264v30h188v60h-41v570q0 24-18 42t-42 18H261Zm438-630H261v570h438v-570ZM367-266h60v-399h-60v399Zm166 0h60v-399h-60v399ZM261-750v570-570Z"/></symbol>
+<symbol id="i-info" viewBox="0 -960 960 960"><path d="M453-280h60v-240h-60v240Zm50.5-323.2q9.5-9.2 9.5-22.8 0-14.45-9.48-24.22-9.48-9.78-23.5-9.78t-23.52 9.78Q447-640.45 447-626q0 13.6 9.48 22.8 9.48 9.2 23.5 9.2t23.52-9.2ZM480.27-80q-82.74 0-155.5-31.5Q252-143 197.5-197.5t-86-127.34Q80-397.68 80-480.5t31.5-155.66Q143-709 197.5-763t127.34-85.5Q397.68-880 480.5-880t155.66 31.5Q709-817 763-763t85.5 127Q880-563 880-480.27q0 82.74-31.5 155.5Q817-252 763-197.68q-54 54.31-127 86Q563-80 480.27-80Zm.23-60Q622-140 721-239.5t99-241Q820-622 721.19-721T480-820q-141 0-240.5 98.81T140-480q0 141 99.5 240.5t241 99.5Zm-.5-340Z"/></symbol>
+<symbol id="i-close" viewBox="0 -960 960 960"><path d="m249-207-42-42 231-231-231-231 42-42 231 231 231-231 42 42-231 231 231 231-42 42-231-231-231 231Z"/></symbol>
+<symbol id="i-check" viewBox="0 -960 960 960"><path d="M378-246 154-470l43-43 181 181 384-384 43 43-427 427Z"/></symbol>
+<symbol id="i-warning" viewBox="0 -960 960 960"><path d="m40-120 440-760 440 760H40Zm104-60h672L480-760 144-180Zm361.5-65.68q8.5-8.67 8.5-21.5 0-12.82-8.68-21.32-8.67-8.5-21.5-8.5-12.82 0-21.32 8.68-8.5 8.67-8.5 21.5 0 12.82 8.68 21.32 8.67 8.5 21.5 8.5 12.82 0 21.32-8.68ZM454-348h60v-224h-60v224Zm26-122Z"/></symbol>
+<symbol id="i-add" viewBox="0 -960 960 960"><path d="M450-450H200v-60h250v-250h60v250h250v60H510v250h-60v-250Z"/></symbol>
+<symbol id="i-edit" viewBox="0 -960 960 960"><path d="M180-180h44l472-471-44-44-472 471v44Zm-60 60v-128l575-574q8-8 19-12.5t23-4.5q11 0 22 4.5t20 12.5l44 44q9 9 13 20t4 22q0 11-4.5 22.5T823-694L248-120H120Zm659-617-41-41 41 41Zm-105 64-22-22 44 44-22-22Z"/></symbol>
+<symbol id="i-my_location" viewBox="0 -960 960 960"><path d="M450-42v-75q-137-14-228-105T117-450H42v-60h75q14-137 105-228t228-105v-75h60v75q137 14 228 105t105 228h75v60h-75q-14 137-105 228T510-117v75h-60Zm244.5-223.5Q784-355 784-480t-89.5-214.5Q605-784 480-784t-214.5 89.5Q176-605 176-480t89.5 214.5Q355-176 480-176t214.5-89.5Zm-321-108Q330-417 330-480t43.5-106.5Q417-630 480-630t106.5 43.5Q630-543 630-480t-43.5 106.5Q543-330 480-330t-106.5-43.5ZM544-416q26-26 26-64t-26-64q-26-26-64-26t-64 26q-26 26-26 64t26 64q26 26 64 26t64-26Zm-64-64Z"/></symbol>
+<symbol id="i-code" viewBox="0 -960 960 960"><path d="M320-242 80-482l242-242 43 43-199 199 197 197-43 43Zm318 2-43-43 199-199-197-197 43-43 240 240-242 242Z"/></symbol>
+<symbol id="i-help" viewBox="0 -960 960 960"><path d="M511-258q11-11 11-27t-11-27q-11-11-27-11t-27 11q-11 11-11 27t11 27q11 11 27 11t27-11Zm-62-135h59q0-26 6.5-47.5T555-490q31-26 44-51t13-55q0-53-34.5-85T486-713q-49 0-86.5 24.5T345-621l53 20q11-28 33-43.5t52-15.5q34 0 55 18.5t21 47.5q0 22-13 41.5T508-512q-30 26-44.5 51.5T449-393Zm31 313q-82 0-155-31.5t-127.5-86Q143-252 111.5-325T80-480q0-83 31.5-156t86-127Q252-817 325-848.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 82-31.5 155T763-197.5q-54 54.5-127 86T480-80Zm0-60q142 0 241-99.5T820-480q0-142-99-241t-241-99q-141 0-240.5 99T140-480q0 141 99.5 240.5T480-140Zm0-340Z"/></symbol>
+<symbol id="i-arrow_back" viewBox="0 -960 960 960"><path d="m274-450 248 248-42 42-320-320 320-320 42 42-248 248h526v60H274Z"/></symbol>
+</svg>
+<div id="app">
+  <header id="kopf">
+    <span class="app-logo" aria-hidden="true"></span>
+    <div class="kopfblock"><h1 class="title-lg" id="titel">FT8-Horch</h1></div>
+    <div id="uhr" role="timer" aria-label="UTC"><span id="uhrZeit">--:--:--</span><span id="uhrDiff"></span></div>
+    <button class="chip" id="profilChip" type="button"></button>
+  </header>
+  <main>
+    <section class="tab aktiv" id="tab-qso" aria-labelledby="n-qso">
+      <div class="installband" id="installBand" role="region" hidden>
+        <span data-i18n="install.hint"></span>
+        <div class="aktionen"><button class="btn tonal" type="button" id="btnInstallHinweis" data-i18n="install.button"></button><button class="btn text" type="button" id="btnInstallZu" data-i18n="install.no"></button></div>
+      </div>
+      <div class="aktionsleiste">
+        <button class="schalter mik" id="btnMik" type="button" role="switch" aria-checked="false" data-i18n-aria="qso.micSwitch" data-i18n-title="qso.micSwitch">
+          <svg class="icon sym-aus" aria-hidden="true"><use href="#i-mic_off"/></svg>
+          <span class="schalter-spur" aria-hidden="true"><span class="schalter-knopf"></span></span>
+          <svg class="icon sym-an" aria-hidden="true"><use href="#i-mic"/></svg>
+        </button>
+        <button class="btn tonal" id="btnCq" type="button" disabled><svg class="icon" aria-hidden="true"><use href="#i-campaign"/></svg><span data-i18n="qso.cq"></span></button>
+        <button class="schalter" id="par" type="button" role="switch" aria-checked="false" data-i18n-title="qso.cqParity" data-i18n-aria="qso.cqParity">
+          <span class="schalter-spur" aria-hidden="true"><span class="schalter-knopf"></span></span>
+          <span class="schalter-wert"><span class="w-even" data-i18n="qso.even"></span><span class="w-odd" data-i18n="qso.odd"></span></span>
+        </button>
+        <button class="btn tonal" id="btnHalt" type="button" disabled><svg class="icon" aria-hidden="true"><use href="#i-stop"/></svg><span data-i18n="qso.halt"></span></button>
+      </div>
+      <div class="warnband" id="warnung" role="status"></div>
+      <div class="warnband" id="profilHinweis" role="status"></div>
+      <div class="warnband" id="zeitHinweis" role="status"></div>
+      <div class="status" id="status" aria-live="off"></div>
+      <div class="pegel" aria-hidden="true"><div id="pegel"></div></div>
+      <div class="wasserfall"><canvas id="wf" width="720" height="220" data-i18n-aria="aria.waterfall"></canvas><canvas id="ov" width="720" height="220" aria-hidden="true"></canvas></div>
+      <div id="qso-spalten">
+        <div><div class="bandkopf"><h2 class="title-md" data-i18n="qso.band"></h2>
+          <button class="schalter" id="autoAntwort" type="button" role="switch" aria-checked="true" disabled data-i18n-title="qso.autoHint"><span class="schalter-text" data-i18n="qso.auto"></span><span class="schalter-spur" aria-hidden="true"><span class="schalter-knopf"></span></span></button></div>
+          <div id="band" class="liste"></div></div>
+        <div><div class="bandkopf"><h2 class="title-md" data-i18n="qso.window"></h2></div><div id="qso" class="liste"></div></div>
+      </div>
+    </section>
+    <section class="tab" id="tab-codierung" aria-labelledby="n-codierung">
+      <p class="hint" data-i18n="cod.intro" style="margin:0 0 8px"></p>
+      <div class="segmente" id="segCod" role="group" data-i18n-aria="aria.direction">
+        <button type="button" data-ansicht="senden" aria-pressed="true" data-i18n="cod.view.send"></button>
+        <button type="button" data-ansicht="empfang" aria-pressed="false" data-i18n="cod.view.recv"></button>
+      </div>
+      <div id="cod-senden">
+        <label class="feld"><span data-i18n="cod.input"></span><input id="codText" type="text" autocomplete="off" spellcheck="false" autocapitalize="characters"></label>
+        <div class="warnband" id="codWarn" role="status"></div>
+        <div id="kette"></div>
+      </div>
+      <div id="cod-empfang" hidden><div id="empfang"></div></div>
+    </section>
+    <section class="tab" id="tab-labor" aria-labelledby="n-labor">
+      <div class="card"><h2 class="title-md" data-i18n="lab.level.title"></h2><p class="hint" data-i18n="lab.level.text"></p>
+        <div class="aktionsleiste"><button class="btn tonal" type="button" id="btnPegel"><svg class="icon" aria-hidden="true"><use href="#i-mic"/></svg><span data-i18n="lab.level.start"></span></button></div>
+        <div class="status" id="pegelStatus" role="status"></div><div id="pegelErgebnis" class="messblock"></div></div>
+      <div class="card"><h2 class="title-md" data-i18n="lab.lat.title"></h2><p class="hint" data-i18n="lab.lat.text"></p>
+        <div class="aktionsleiste"><button class="btn tonal" type="button" id="btnLat"><svg class="icon" aria-hidden="true"><use href="#i-campaign"/></svg><span data-i18n="lab.lat.start"></span></button></div>
+        <div class="status" id="latStatus" role="status"></div><div id="latErgebnis" class="messblock"></div></div>
+      <div class="card"><h2 class="title-md" data-i18n="vt.title"></h2><p class="hint" data-i18n="vt.text"></p>
+        <label class="feld"><span data-i18n="vt.role"></span><select id="vtRolle"><option value="A" data-i18n="vt.roleA"></option><option value="B" data-i18n="vt.roleB"></option></select></label>
+        <label class="feld"><span data-i18n="vt.rounds"></span><input id="vtRunden" type="number" min="2" max="10" step="1" inputmode="numeric"></label>
+        <div class="aktionsleiste" style="margin-top:12px"><button class="btn tonal" type="button" id="btnVt"><svg class="icon" aria-hidden="true"><use href="#i-campaign"/></svg><span id="btnVtText"></span></button></div>
+        <div class="status" id="vtStatus" role="status"></div><div id="vtRunde" class="liste vtliste" hidden></div><div id="vtErgebnis" class="messblock"></div></div>
+      <div class="card"><h2 class="title-md" data-i18n="wav.title"></h2><p class="hint" data-i18n="wav.text"></p>
+        <div class="aktionsleiste"><button class="btn tonal" type="button" id="btnWavSpeichern"><svg class="icon" aria-hidden="true"><use href="#i-download"/></svg><span data-i18n="wav.save"></span></button><button class="btn tonal" type="button" id="btnWavLaden"><svg class="icon" aria-hidden="true"><use href="#i-upload"/></svg><span data-i18n="wav.load"></span></button><input type="file" id="wavDatei" accept=".wav,audio/wav,audio/x-wav" hidden></div>
+        <label class="feld"><span data-i18n="wav.lead"></span><input id="wavVorlauf" type="number" min="0" max="60" step="0.5" value="0"></label>
+        <p class="hint body-sm" data-i18n="wav.leadNote"></p>
+        <div class="status" id="wavStatus" role="status"></div><div id="wavErgebnis" class="liste wavliste"></div></div>
+    
+      <div class="card"><h2 class="title-md" data-i18n="sim.title"></h2><p class="hint" data-i18n="sim.text"></p>
+        <p class="hint body-sm" id="simProfil"></p>
+        <label class="feld"><span data-i18n="sim.message"></span><input id="simText" type="text" value="CQ DL6LG JO60" autocomplete="off" spellcheck="false" autocapitalize="characters"></label>
+        <div class="reihe">
+          <label class="feld"><span data-i18n="sim.snr"></span><input id="simSnr" type="number" step="0.5" value="-15"></label>
+          <label class="feld"><span data-i18n="sim.dt"></span><input id="simDt" type="number" step="0.1" value="0.2"></label>
+          <label class="feld"><span data-i18n="sim.df"></span><input id="simDf" type="number" step="1" value="0"></label>
+          <label class="feld"><span data-i18n="sim.ppm"></span><input id="simPpm" type="number" step="10" value="0"></label>
+        </div>
+        <div class="aktionsleiste"><button class="btn tonal" type="button" id="btnSimEin"><svg class="icon" aria-hidden="true"><use href="#i-science"/></svg><span data-i18n="sim.one"></span></button></div>
+        <div class="status" id="simStatus" role="status"></div><div id="simErgebnis" class="messblock"></div></div>
+      <div class="card"><h2 class="title-md" data-i18n="sim.series"></h2><p class="hint" data-i18n="sim.seriesText"></p>
+        <div class="reihe">
+          <label class="feld"><span data-i18n="sim.which"></span><select id="reiheWelche"><option value="aktuell" data-i18n="sim.whichCurrent"></option><option value="alle" data-i18n="sim.whichAll"></option></select></label>
+          <label class="feld"><span data-i18n="sim.trials"></span><input id="reiheN" type="number" min="1" max="50" step="1" value="4"></label>
+        </div>
+        <div class="reihe">
+          <label class="feld"><span data-i18n="sim.from"></span><input id="reiheVon" type="number" step="1"></label>
+          <label class="feld"><span data-i18n="sim.to"></span><input id="reiheBis" type="number" step="1"></label>
+          <label class="feld"><span data-i18n="sim.step"></span><input id="reiheSchritt" type="number" min="0.5" step="0.5" value="2"></label>
+        </div>
+        <div class="status" id="reiheSchaetzung"></div>
+        <div class="aktionsleiste"><button class="btn tonal" type="button" id="btnReihe"><svg class="icon" aria-hidden="true"><use href="#i-science"/></svg><span data-i18n="sim.start"></span></button><button class="btn text" type="button" id="btnReiheAbbruch" hidden><svg class="icon" aria-hidden="true"><use href="#i-close"/></svg><span data-i18n="sim.cancel"></span></button></div>
+        <div class="status" id="reiheStatus" role="status"></div>
+        <div class="diagramm"><canvas id="reiheBild" width="720" height="320" role="img" data-i18n-aria="sim.chartLabel" hidden></canvas></div>
+        <div id="reiheErgebnis" class="messblock"></div></div>
+    </section>
+    <section class="tab" id="tab-log" aria-labelledby="n-log">
+      <div class="segmente" id="segLog" role="group" data-i18n-aria="aria.log">
+        <button type="button" data-ansicht="qso" aria-pressed="true" data-i18n="log.tabQso"></button>
+        <button type="button" data-ansicht="protokoll" aria-pressed="false" data-i18n="log.tabProtocol"></button>
+      </div>
+      <div id="log-qso">
+        <div class="card"><h2 class="title-md" data-i18n="log.title"></h2>
+          <label class="feld"><span data-i18n="log.search"></span><input id="logSuche" type="search" autocomplete="off" spellcheck="false"></label>
+          <div class="reihe">
+            <label class="feld"><span data-i18n="log.status"></span><select id="logStatus"><option value="alle" data-i18n="log.statusAll"></option><option value="bestaetigt" data-i18n="log.statusConfirmed"></option><option value="unbestaetigt" data-i18n="log.statusUnconfirmed"></option></select></label>
+            <label class="feld"><span data-i18n="log.from"></span><input id="logVon" type="date"></label>
+            <label class="feld"><span data-i18n="log.to"></span><input id="logBis" type="date"></label>
+          </div>
+          <div class="aktionsleiste" style="margin:12px 0"><button class="btn tonal" type="button" id="btnAdd"><svg class="icon" aria-hidden="true"><use href="#i-add"/></svg><span data-i18n="log.add"></span></button><button class="btn tonal" type="button" id="btnExport"><svg class="icon" aria-hidden="true"><use href="#i-download"/></svg><span data-i18n="log.export"></span></button><button class="btn tonal" type="button" id="btnImport"><svg class="icon" aria-hidden="true"><use href="#i-upload"/></svg><span data-i18n="log.import"></span></button><input type="file" id="adifDatei" accept=".adi,.adif,.txt,text/plain" hidden><button class="btn text" type="button" id="btnLeeren"><svg class="icon" aria-hidden="true"><use href="#i-delete"/></svg><span data-i18n="log.clear"></span></button></div>
+          <div class="status" id="importStatus" role="status"></div>
+          <div class="body-sm hint" id="logZahl" style="margin-bottom:8px"></div>
+          <div id="log" class="liste logliste"></div><p class="hint body-sm" data-i18n="log.note"></p></div>
+      </div>
+      <div id="log-protokoll" hidden>
+        <div class="card" id="findKarte" hidden><h2 class="title-md" data-i18n="find.title"></h2>
+          <p class="hint body-sm" data-i18n="find.hint"></p>
+          <div id="findListe" class="liste logliste"></div></div>
+        <div class="card"><h2 class="title-md" data-i18n="log.tabProtocol"></h2>
+          <div class="segmente" id="segProto" role="group" data-i18n-aria="aria.filter">
+            <button type="button" data-art="alle" aria-pressed="true" data-i18n="proto.all"></button>
+            <button type="button" data-art="rx" aria-pressed="false" data-i18n="proto.rx"></button>
+            <button type="button" data-art="tx" aria-pressed="false" data-i18n="proto.tx"></button>
+            <button type="button" data-art="qso" aria-pressed="false" data-i18n="proto.qso"></button>
+          </div>
+          <label class="feld"><span data-i18n="proto.search"></span><input id="protoSuche" type="search" autocomplete="off" spellcheck="false"></label>
+          <div class="aktionsleiste" style="margin:12px 0"><button class="btn tonal" type="button" id="btnProtoTxt"><svg class="icon" aria-hidden="true"><use href="#i-download"/></svg><span data-i18n="proto.exportTxt"></span></button><button class="btn tonal" type="button" id="btnProtoCsv"><svg class="icon" aria-hidden="true"><use href="#i-download"/></svg><span data-i18n="proto.exportCsv"></span></button><button class="btn text" type="button" id="btnProtoLeeren"><svg class="icon" aria-hidden="true"><use href="#i-delete"/></svg><span data-i18n="proto.clear"></span></button></div>
+          <div class="body-sm hint" id="protoZahl" style="margin-bottom:8px"></div>
+          <div id="protoListe" class="liste logliste"></div>
+          <div class="aktionsleiste"><button class="btn text" type="button" id="btnProtoMehr" hidden data-i18n="proto.more"></button></div>
+          <p class="hint body-sm" id="protoHinweis"></p></div>
+      </div>
+    </section>
+      <section class="tab" id="tab-hilfe" aria-labelledby="titel">
+      <div class="aktionsleiste"><button class="btn text" type="button" id="btnHilfeZurueck"><svg class="icon" aria-hidden="true"><use href="#i-arrow_back"/></svg><span data-i18n="common.back"></span></button></div>
+      <details class="card" id="hilfeInhalt" hidden><summary class="title-md" data-i18n="help.toc"></summary><nav id="hilfeNav" aria-label="Inhalt"></nav></details>
+      <article id="hilfeText" class="md" tabindex="-1"></article>
+    </section>
+      <section class="tab" id="tab-einstellungen" aria-labelledby="einstTitel">
+      <div class="aktionsleiste"><button class="btn text" type="button" id="btnEinstZurueck"><svg class="icon" aria-hidden="true"><use href="#i-arrow_back"/></svg><span data-i18n="common.back"></span></button></div>
+      <h2 class="title-lg seitentitel" id="einstTitel" data-i18n="settings.title"></h2>
+      <div class="card"><h3 class="title-md" data-i18n="settings.group.station"></h3>
+        <label class="feld"><span data-i18n="settings.call"></span><input id="call" type="text" autocapitalize="characters" autocomplete="off" spellcheck="false"></label>
+        <div class="locator-zeile">
+          <label class="feld"><span data-i18n="settings.grid"></span><input id="grid" type="text" maxlength="4" autocapitalize="characters" autocomplete="off" spellcheck="false"></label>
+          <button class="btn tonal" type="button" id="btnOrt" data-i18n-title="settings.locate" data-i18n-aria="settings.locate"><svg class="icon" aria-hidden="true"><use href="#i-my_location"/></svg><span class="btn-text" data-i18n="settings.locate"></span></button>
+        </div>
+        <div class="warnband" id="einstWarn" role="status"></div></div>
+      <div class="card"><h3 class="title-md" data-i18n="settings.group.display"></h3>
+        <label class="feld"><span data-i18n="settings.language"></span><select id="lang"><option value="de">Deutsch</option><option value="en">English</option></select></label>
+        <label class="feld"><span data-i18n="settings.theme"></span><select id="theme"><option value="auto" data-i18n="settings.theme.auto"></option><option value="light" data-i18n="settings.theme.light"></option><option value="dark" data-i18n="settings.theme.dark"></option></select></label></div>
+      <div class="card"><h3 class="title-md" data-i18n="auto.title"></h3>
+        <label class="feld" style="margin-top:4px"><span data-i18n="auto.skip"></span><select id="autoSkip"><option value="heute" data-i18n="auto.skip.today"></option><option value="immer" data-i18n="auto.skip.always"></option><option value="nie" data-i18n="auto.skip.never"></option></select></label>
+        <p class="hint body-sm" data-i18n="auto.note"></p>
+        <label class="feld"><span data-i18n="auto.hold"></span><select id="txHalten"><option value="0" data-i18n="auto.hold.take"></option><option value="1" data-i18n="auto.hold.keep"></option></select></label>
+        <label class="feld"><span data-i18n="auto.cqKeep"></span><select id="cqWeiter"><option value="0" data-i18n="auto.cqKeep.stop"></option><option value="1" data-i18n="auto.cqKeep.go"></option></select></label>
+        <p class="hint body-sm" data-i18n="auto.holdNote"></p></div>
+      <div class="card"><h3 class="title-md" data-i18n="time.title"></h3>
+        <label class="feld" style="margin-top:4px"><span data-i18n="time.source"></span><select id="zeitquelle"><option value="system" data-i18n="time.source.system"></option><option value="server" data-i18n="time.source.server"></option></select></label>
+        <p class="hint body-sm" data-i18n="time.sourceNote"></p>
+        <div id="zeitInfo" class="hint" role="status"></div>
+        <div class="aktionen" style="justify-content:flex-start;margin-top:8px"><button class="btn tonal" type="button" id="btnZeit" data-i18n="time.check"></button><button class="btn text" type="button" id="btnZeitAus" data-i18n="time.reset" hidden></button></div>
+        <p class="hint body-sm" data-i18n="time.note"></p></div>
+      <div class="card"><h3 class="title-md" data-i18n="data.title"></h3>
+        <p class="hint body-sm" style="margin-top:0" data-i18n="data.text"></p>
+        <div class="aktionen" style="justify-content:flex-start"><button class="btn tonal" type="button" id="btnSicherung"><svg class="icon" aria-hidden="true"><use href="#i-download"/></svg><span data-i18n="data.save"></span></button><button class="btn tonal" type="button" id="btnWiederherstellen"><svg class="icon" aria-hidden="true"><use href="#i-upload"/></svg><span data-i18n="data.restore"></span></button><input type="file" id="sicherungDatei" accept=".json,application/json" hidden></div>
+        <div class="status" id="datenStatus" role="status"></div>
+        <p class="hint body-sm" id="speicherInfo"></p></div>
+      <div class="card" id="installKarte"><h3 class="title-md" data-i18n="install.title"></h3>
+        <p id="installText" class="hint" style="margin:0"></p>
+        <div class="aktionen" style="justify-content:flex-start;margin-top:8px"><button class="btn tonal" type="button" id="btnInstall" data-i18n="install.button" hidden></button></div></div>
+    </section>
+    <section class="tab" id="tab-ueber" aria-labelledby="ueberTitel">
+      <div class="aktionsleiste"><button class="btn text" type="button" id="btnUeberZurueck"><svg class="icon" aria-hidden="true"><use href="#i-arrow_back"/></svg><span data-i18n="common.back"></span></button></div>
+      <h2 class="title-lg seitentitel" id="ueberTitel" data-i18n="about.title"></h2>
+      <div class="card"><h3 class="title-md" data-i18n="about.app"></h3>
+        <div class="ueber-logo"><img src="icons/logo.svg" alt="FT8-Horch" width="96" height="96"></div>
+        <div class="messblock" id="ueberApp"></div>
+        <p class="hint" data-i18n="about.purpose"></p></div>
+      <div class="card"><h3 class="title-md" data-i18n="about.author"></h3>
+        <div class="messblock" id="ueberAutor"></div></div>
+      <div class="card"><h3 class="title-md" data-i18n="about.links"></h3>
+        <p><a href="https://ohrenbeisser.de" target="_blank" rel="noopener noreferrer">ohrenbeisser.de</a></p>
+        <p class="hint body-sm" data-i18n="about.linksNote"></p></div>
+      <div class="card"><h3 class="title-md" data-i18n="about.credits"></h3>
+        <p data-i18n="about.credits1"></p><p data-i18n="about.credits2"></p><p data-i18n="about.credits3"></p></div>
+      <div class="card"><h3 class="title-md" data-i18n="about.privacy"></h3>
+        <p data-i18n="about.privacyText"></p></div>
+    </section>
+  </main>
+  <nav id="nav" aria-label="Navigation">
+    <button type="button" id="n-qso" data-tab="qso" aria-current="page"><span class="pille"><svg class="icon" aria-hidden="true"><use href="#i-forum"/></svg></span><span data-i18n="nav.qso"></span></button>
+    <button type="button" id="n-codierung" data-tab="codierung"><span class="pille"><svg class="icon" aria-hidden="true"><use href="#i-code"/></svg></span><span data-i18n="nav.coding"></span></button>
+    <button type="button" id="n-labor" data-tab="labor"><span class="pille"><svg class="icon" aria-hidden="true"><use href="#i-science"/></svg></span><span data-i18n="nav.lab"></span></button>
+    <button type="button" id="n-log" data-tab="log"><span class="pille"><svg class="icon" aria-hidden="true"><use href="#i-history"/></svg></span><span data-i18n="nav.log"></span></button>
+    <span class="trenner" role="separator" aria-orientation="vertical"></span>
+    <button type="button" id="btnHilfe" class="aktion"><span class="pille"><svg class="icon" aria-hidden="true"><use href="#i-help"/></svg></span><span data-i18n="head.help"></span></button>
+    <button type="button" id="btnUeber" class="aktion"><span class="pille"><svg class="icon" aria-hidden="true"><use href="#i-info"/></svg></span><span data-i18n="head.about"></span></button>
+    <button type="button" id="btnEinst" class="aktion" data-i18n-title="head.settings"><span class="pille"><svg class="icon" aria-hidden="true"><use href="#i-settings"/></svg></span><span class="voll" data-i18n="head.settings"></span><span class="kurz" data-i18n="head.settingsShort"></span></button>
+  </nav>
+</div>
+
+<dialog id="dlgProfil" class="sheet" aria-labelledby="dlgProfilTitel"><div class="inhalt">
+  <h2 class="title-lg" id="dlgProfilTitel" style="margin:0" data-i18n="profile.title"></h2>
+  <label class="feld"><span data-i18n="profile.txf"></span><input id="txf" type="number" min="200" max="3000" step="1" inputmode="numeric"></label>
+  <div class="label-lg" style="margin-top:16px" data-i18n="profile.time"></div>
+  <div class="segmente" id="segKt" role="group" data-i18n-aria="aria.time"></div>
+  <div class="label-lg" style="margin-top:16px" data-i18n="profile.spacing"></div>
+  <div class="segmente" id="segKf" role="group" data-i18n-aria="aria.spacing"></div>
+  <div class="warnband" id="profilWarn"></div>
+  <div class="aktionen"><button class="btn text" type="button" data-schliessen data-i18n="common.close"></button></div>
+</div></dialog>
+
+<dialog id="dlgBearbeiten" aria-labelledby="dlgBearbeitenTitel"><div class="inhalt">
+  <h2 class="title-lg" id="dlgBearbeitenTitel" style="margin:0" data-i18n="log.editTitle"></h2>
+  <div id="eNeu" hidden>
+    <div class="reihe">
+      <label class="feld"><span data-i18n="log.field.date"></span><input id="eDatum" type="date"></label>
+      <label class="feld"><span data-i18n="log.field.from"></span><input id="eVon" type="time"></label>
+      <label class="feld"><span data-i18n="log.field.until"></span><input id="eBis" type="time"></label>
+    </div>
+    <label class="feld"><span data-i18n="log.field.profile"></span><select id="eProfil"></select></label>
+  </div>
+  <label class="feld"><span data-i18n="log.field.call"></span><input id="eCall" type="text" autocapitalize="characters" autocomplete="off" spellcheck="false"></label>
+  <label class="feld"><span data-i18n="log.field.grid"></span><input id="eGrid" type="text" maxlength="6" autocapitalize="characters" autocomplete="off" spellcheck="false"></label>
+  <div class="reihe">
+    <label class="feld"><span data-i18n="log.field.sent"></span><input id="eSent" type="text" maxlength="3" inputmode="text" autocomplete="off"></label>
+    <label class="feld"><span data-i18n="log.field.rcvd"></span><input id="eRcvd" type="text" maxlength="3" inputmode="text" autocomplete="off"></label>
+  </div>
+  <label class="feld"><span data-i18n="log.field.confirmed"></span><select id="eConf"><option value="1" data-i18n="log.yes"></option><option value="0" data-i18n="log.no"></option></select></label>
+  <label class="feld"><span data-i18n="log.field.note"></span><input id="eNotiz" type="text" maxlength="200" autocomplete="off"></label>
+  <div class="warnband" id="eWarn" role="alert"></div>
+  <div class="aktionen"><button class="btn text" type="button" data-schliessen data-i18n="common.cancel"></button><button class="btn filled" type="button" id="btnEditSpeichern" data-i18n="common.save"></button></div>
+</div></dialog>
+
+<dialog id="dlgLeeren" aria-labelledby="dlgLeerenTitel"><div class="inhalt">
+  <h2 class="title-lg" id="dlgLeerenTitel" style="margin:0"></h2>
+  <p id="leerenText"></p>
+  <div class="aktionen"><button class="btn text" type="button" data-schliessen data-i18n="common.cancel"></button><button class="btn filled" type="button" id="btnLeerenJa"></button></div>
+</div></dialog>
+
+<div id="snackbar" role="status" aria-live="polite"></div>
+<script type="module" src="app.js"></script>
+</body>
+</html>
