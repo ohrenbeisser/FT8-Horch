@@ -2,6 +2,7 @@
   "name": "FT8-Horch",
   "short_name": "FT8-Horch",
   "description": "FT8 mit dehnbarer Zeit und einstellbarem Tonabstand",
+  "id": "./",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

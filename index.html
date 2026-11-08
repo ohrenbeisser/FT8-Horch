@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>FT8-Horch</title>
 <meta name="description" content="FT8 mit dehnbarer Zeit und einstellbarem Tonabstand">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' blob:; worker-src 'self' blob:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
 <meta name="theme-color" content="#c0001a">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/logo.svg" type="image/svg+xml">
@@ -14,6 +15,7 @@
 </head>
 <body>
 <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+<symbol id="i-menu" viewBox="0 -960 960 960"><path d="M120-240v-60h720v60H120Zm0-210v-60h720v60H120Zm0-210v-60h720v60H120Z"/></symbol>
 <symbol id="i-forum" viewBox="0 -960 960 960"><path d="M880-81 721-240H300q-24.75 0-42.37-17.63Q240-275.25 240-300v-80h440q24.75 0 42.38-17.63Q740-415.25 740-440v-280h80q24.75 0 42.38 17.62Q880-684.75 880-660v579ZM140-425l75-75h405v-320H140v395ZM80-280v-540q0-24.75 17.63-42.38Q115.25-880 140-880h480q24.75 0 42.38 17.62Q680-844.75 680-820v320q0 24.75-17.62 42.37Q644.75-440 620-440H240L80-280Zm60-220v-320 320Z"/></symbol>
 <symbol id="i-science" viewBox="0 -960 960 960"><path d="M172-120q-41.78 0-59.39-39T124-230l248-280v-270h-52q-12.75 0-21.37-8.68-8.63-8.67-8.63-21.5 0-12.82 8.63-21.32 8.62-8.5 21.37-8.5h320q12.75 0 21.38 8.68 8.62 8.67 8.62 21.5 0 12.82-8.62 21.32-8.63 8.5-21.38 8.5h-52v270l248 280q29 32 11.39 71T788-120H172Zm-12-60h640L528-488v-292h-96v292L160-180Zm318-300Z"/></symbol>
 <symbol id="i-history" viewBox="0 -960 960 960"><path d="M477-120q-149 0-253-105.5T120-481h60q0 125 86 213t211 88q127 0 215-89t88-216q0-124-89-209.5T477-780q-68 0-127.5 31T246-667h105v60H142v-208h60v106q52-61 123.5-96T477-840q75 0 141 28t115.5 76.5Q783-687 811.5-622T840-482q0 75-28.5 141t-78 115Q684-177 618-148.5T477-120Zm128-197L451-469v-214h60v189l137 134-43 43Z"/></symbol>
@@ -38,13 +40,13 @@
 </svg>
 <div id="app">
   <header id="kopf">
-    <span class="app-logo" aria-hidden="true"></span>
-    <div class="kopfblock"><h1 class="title-lg" id="titel">FT8-Horch</h1></div>
+    <button class="icon-btn" id="btnMenue" type="button" aria-controls="schublade" aria-expanded="false" data-i18n-aria="nav.menu"><svg class="icon" aria-hidden="true"><use href="#i-menu"/></svg></button>
+    <h1 id="titel">FT8-Horch</h1>
     <div id="uhr" role="timer" aria-label="UTC"><span id="uhrZeit">--:--:--</span><span id="uhrDiff"></span></div>
     <button class="chip" id="profilChip" type="button"></button>
   </header>
   <main>
-    <section class="tab aktiv" id="tab-qso" aria-labelledby="n-qso">
+    <section class="tab aktiv mikaus" id="tab-qso" aria-labelledby="n-qso">
       <div class="installband" id="installBand" role="region" hidden>
         <span data-i18n="install.hint"></span>
         <div class="aktionen"><button class="btn tonal" type="button" id="btnInstallHinweis" data-i18n="install.button"></button><button class="btn text" type="button" id="btnInstallZu" data-i18n="install.no"></button></div>
@@ -67,12 +69,12 @@
       <div class="warnband" id="zeitHinweis" role="status"></div>
       <div class="status" id="status" aria-live="off"></div>
       <div class="pegel" aria-hidden="true"><div id="pegel"></div></div>
-      <div class="wasserfall"><canvas id="wf" width="720" height="220" data-i18n-aria="aria.waterfall"></canvas><canvas id="ov" width="720" height="220" aria-hidden="true"></canvas></div>
+      <div class="wasserfall"><canvas id="wf" width="720" height="220" data-i18n-aria="aria.waterfall"></canvas><canvas id="ov" width="720" height="220" aria-hidden="true"></canvas><div class="schleier" aria-hidden="true"></div></div>
       <div id="qso-spalten">
         <div><div class="bandkopf"><h2 class="title-md" data-i18n="qso.band"></h2>
           <button class="schalter" id="autoAntwort" type="button" role="switch" aria-checked="true" disabled data-i18n-title="qso.autoHint"><span class="schalter-text" data-i18n="qso.auto"></span><span class="schalter-spur" aria-hidden="true"><span class="schalter-knopf"></span></span></button></div>
-          <div id="band" class="liste"></div></div>
-        <div><div class="bandkopf"><h2 class="title-md" data-i18n="qso.window"></h2></div><div id="qso" class="liste"></div></div>
+          <div class="schleierbox"><div id="band" class="liste"></div><div class="schleier" aria-hidden="true"></div></div></div>
+        <div><div class="bandkopf"><h2 class="title-md" data-i18n="qso.window"></h2></div><div class="schleierbox"><div id="qso" class="liste"></div><div class="schleier" aria-hidden="true"></div></div></div>
       </div>
     </section>
     <section class="tab" id="tab-codierung" aria-labelledby="n-codierung">
@@ -188,12 +190,25 @@
       <div class="card"><h3 class="title-md" data-i18n="settings.group.display"></h3>
         <label class="feld"><span data-i18n="settings.language"></span><select id="lang"><option value="de">Deutsch</option><option value="en">English</option></select></label>
         <label class="feld"><span data-i18n="settings.theme"></span><select id="theme"><option value="auto" data-i18n="settings.theme.auto"></option><option value="light" data-i18n="settings.theme.light"></option><option value="dark" data-i18n="settings.theme.dark"></option></select></label></div>
+      <div class="card"><h3 class="title-md" data-i18n="audio.title"></h3>
+        <label class="feld" style="margin-top:4px"><span data-i18n="settings.audio.eingang"></span><select id="audioEingang"></select></label>
+        <label class="feld"><span data-i18n="settings.audio.ausgang"></span><select id="audioAusgang"></select></label>
+        <p class="hint body-sm" id="audioAusgangNein" data-i18n="settings.audio.ausgang.nein" hidden></p>
+        <div id="audioFreigabe" hidden>
+          <p class="hint body-sm" data-i18n="settings.audio.entsperren.hinweis"></p>
+          <div class="aktionen"><button class="btn tonal" type="button" id="audioFreigabeKnopf" data-i18n="settings.audio.entsperren"></button></div>
+          <div class="warnband" id="audioFreigabeFehler" role="alert"></div>
+        </div>
+        <p class="hint body-sm" data-i18n="settings.audio.hinweis"></p>
+        <label class="feld"><span data-i18n="audio.extra"></span><input id="ausZusatzMs" type="number" min="0" max="1000" step="10" inputmode="numeric"></label>
+        <p class="hint body-sm" data-i18n="audio.extraNote"></p></div>
       <div class="card"><h3 class="title-md" data-i18n="auto.title"></h3>
         <label class="feld" style="margin-top:4px"><span data-i18n="auto.skip"></span><select id="autoSkip"><option value="heute" data-i18n="auto.skip.today"></option><option value="immer" data-i18n="auto.skip.always"></option><option value="nie" data-i18n="auto.skip.never"></option></select></label>
         <p class="hint body-sm" data-i18n="auto.note"></p>
         <label class="feld"><span data-i18n="auto.hold"></span><select id="txHalten"><option value="0" data-i18n="auto.hold.take"></option><option value="1" data-i18n="auto.hold.keep"></option></select></label>
         <label class="feld"><span data-i18n="auto.cqKeep"></span><select id="cqWeiter"><option value="0" data-i18n="auto.cqKeep.stop"></option><option value="1" data-i18n="auto.cqKeep.go"></option></select></label>
-        <p class="hint body-sm" data-i18n="auto.holdNote"></p></div>
+        <p class="hint body-sm" data-i18n="auto.holdNote"></p>
+        <label class="feld"><span data-i18n="auto.notify"></span><select id="anrufMelden"><option value="1" data-i18n="auto.notify.on"></option><option value="0" data-i18n="auto.notify.off"></option></select></label></div>
       <div class="card"><h3 class="title-md" data-i18n="time.title"></h3>
         <label class="feld" style="margin-top:4px"><span data-i18n="time.source"></span><select id="zeitquelle"><option value="system" data-i18n="time.source.system"></option><option value="server" data-i18n="time.source.server"></option></select></label>
         <p class="hint body-sm" data-i18n="time.sourceNote"></p>
@@ -212,30 +227,33 @@
     <section class="tab" id="tab-ueber" aria-labelledby="ueberTitel">
       <div class="aktionsleiste"><button class="btn text" type="button" id="btnUeberZurueck"><svg class="icon" aria-hidden="true"><use href="#i-arrow_back"/></svg><span data-i18n="common.back"></span></button></div>
       <h2 class="title-lg seitentitel" id="ueberTitel" data-i18n="about.title"></h2>
-      <div class="card"><h3 class="title-md" data-i18n="about.app"></h3>
+      <div class="card ueber-kopf">
         <div class="ueber-logo"><img src="icons/logo.svg" alt="FT8-Horch" width="96" height="96"></div>
-        <div class="messblock" id="ueberApp"></div>
-        <p class="hint" data-i18n="about.purpose"></p></div>
-      <div class="card"><h3 class="title-md" data-i18n="about.author"></h3>
-        <div class="messblock" id="ueberAutor"></div></div>
-      <div class="card"><h3 class="title-md" data-i18n="about.links"></h3>
-        <p><a href="https://ohrenbeisser.de" target="_blank" rel="noopener noreferrer">ohrenbeisser.de</a></p>
-        <p class="hint body-sm" data-i18n="about.linksNote"></p></div>
-      <div class="card"><h3 class="title-md" data-i18n="about.credits"></h3>
-        <p data-i18n="about.credits1"></p><p data-i18n="about.credits2"></p><p data-i18n="about.credits3"></p></div>
+        <h3 class="title-lg" id="ueberName">FT8-Horch</h3>
+        <p class="hint" data-i18n="about.purpose"></p>
+        <div class="messblock" id="ueberApp"></div></div>
+      <div class="card"><h3 class="title-md" data-i18n="about.components"></h3>
+        <p class="hint body-sm" data-i18n="about.componentsNote"></p>
+        <div class="messblock" id="ueberKomponenten"></div></div>
+      <div class="card"><h3 class="title-md" data-i18n="about.thanks"></h3>
+        <p data-i18n="about.thanks1"></p><p data-i18n="about.thanks2"></p><p data-i18n="about.thanks3"></p></div>
       <div class="card"><h3 class="title-md" data-i18n="about.privacy"></h3>
         <p data-i18n="about.privacyText"></p></div>
+      <div class="card"><h3 class="title-md" data-i18n="about.liability"></h3>
+        <p data-i18n="about.liability1"></p><p data-i18n="about.liability2"></p></div>
     </section>
   </main>
-  <nav id="nav" aria-label="Navigation">
-    <button type="button" id="n-qso" data-tab="qso" aria-current="page"><span class="pille"><svg class="icon" aria-hidden="true"><use href="#i-forum"/></svg></span><span data-i18n="nav.qso"></span></button>
-    <button type="button" id="n-codierung" data-tab="codierung"><span class="pille"><svg class="icon" aria-hidden="true"><use href="#i-code"/></svg></span><span data-i18n="nav.coding"></span></button>
-    <button type="button" id="n-labor" data-tab="labor"><span class="pille"><svg class="icon" aria-hidden="true"><use href="#i-science"/></svg></span><span data-i18n="nav.lab"></span></button>
-    <button type="button" id="n-log" data-tab="log"><span class="pille"><svg class="icon" aria-hidden="true"><use href="#i-history"/></svg></span><span data-i18n="nav.log"></span></button>
-    <span class="trenner" role="separator" aria-orientation="vertical"></span>
-    <button type="button" id="btnHilfe" class="aktion"><span class="pille"><svg class="icon" aria-hidden="true"><use href="#i-help"/></svg></span><span data-i18n="head.help"></span></button>
-    <button type="button" id="btnUeber" class="aktion"><span class="pille"><svg class="icon" aria-hidden="true"><use href="#i-info"/></svg></span><span data-i18n="head.about"></span></button>
-    <button type="button" id="btnEinst" class="aktion" data-i18n-title="head.settings"><span class="pille"><svg class="icon" aria-hidden="true"><use href="#i-settings"/></svg></span><span class="voll" data-i18n="head.settings"></span><span class="kurz" data-i18n="head.settingsShort"></span></button>
+  <div id="scrim"></div>
+  <nav id="schublade" data-i18n-aria="nav.menu">
+    <div class="sch-kopf"><img src="icons/logo.svg" alt=""><div><div class="name">FT8-Horch</div><div class="zusatz body-sm" data-i18n="app.tagline"></div></div></div>
+    <button type="button" class="sch-eintrag" id="n-qso" data-tab="qso" aria-current="page"><svg class="icon" aria-hidden="true"><use href="#i-forum"/></svg><span data-i18n="nav.qso"></span></button>
+    <button type="button" class="sch-eintrag" id="n-codierung" data-tab="codierung"><svg class="icon" aria-hidden="true"><use href="#i-code"/></svg><span data-i18n="nav.coding"></span></button>
+    <button type="button" class="sch-eintrag" id="n-labor" data-tab="labor"><svg class="icon" aria-hidden="true"><use href="#i-science"/></svg><span data-i18n="nav.lab"></span></button>
+    <button type="button" class="sch-eintrag" id="n-log" data-tab="log"><svg class="icon" aria-hidden="true"><use href="#i-history"/></svg><span data-i18n="nav.log"></span></button>
+    <div class="sch-trenner unten" role="separator"></div>
+    <button type="button" class="sch-eintrag" id="btnEinst"><svg class="icon" aria-hidden="true"><use href="#i-settings"/></svg><span data-i18n="head.settings"></span></button>
+    <button type="button" class="sch-eintrag" id="btnHilfe"><svg class="icon" aria-hidden="true"><use href="#i-help"/></svg><span data-i18n="head.help"></span></button>
+    <button type="button" class="sch-eintrag" id="btnUeber"><svg class="icon" aria-hidden="true"><use href="#i-info"/></svg><span data-i18n="head.about"></span></button>
   </nav>
 </div>
 

@@ -4,14 +4,14 @@ FT8-Horch für den Browser (PWA): ein vollständiges QSO über Lautsprecher und 
 
 ## Was die App kann
 
-* QSO-Reiter mit Auto-Sequenz und Auto-Antwort, Mikrofon-Schalter, Statuszeile und Wasserfall
+* QSO-Reiter mit Auto-Sequenz und Auto-Antwort, Mikrofon-Schalter, Statuszeile und Wasserfall, Meldung bei Anruf an das eigene Rufzeichen (Hinweis und Vibration)
 * Codierungs-Tab: Senden und Empfangen Schritt für Schritt
 * Labor: Pegeltest, Laufzeitmessung, Simulator, Verbindungstest zwischen zwei Geräten, WAV-Dateien speichern und decodieren
 * Log mit ADIF-Export und -Import, Textprotokoll, Sicherung aller Daten
 * Anleitung auf Deutsch und Englisch mit Bildern, Oberfläche in beiden Sprachen, Hell und Dunkel
 * Installation als PWA, läuft offline
 
-Alle Daten bleiben lokal im Browser. Es gibt keinen Server und kein Nachladen aus dem Netz.
+Alle Daten bleiben lokal im Browser. Es gibt keinen Server und kein Nachladen aus dem Netz, eine Content-Security-Policy erlaubt nur den eigenen Ursprung.
 
 Nur das Standardprofil (Zeit und Tonabstand ohne Änderung) ist mit WSJT-X kompatibel. Alle anderen Profile sind FT8-Varianten und funktionieren nur zwischen zwei Instanzen dieser App. Varianten gehören nicht auf die Standard-FT8-Frequenzen.
 

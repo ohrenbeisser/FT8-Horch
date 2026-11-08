@@ -55,6 +55,21 @@ export class Recorder {
     this.ring.push(block);
   }
 
+  // Korrigiert den Start. Der Wert gilt im Rahmen der App-Uhr zum Zeitpunkt des Starts (ohne späteren Ausgleich)
+  korrigiereStart(startedAtMs) {
+    this.startedAtMs = startedAtMs;
+  }
+
+  // Dauer der bisher aufgenommenen Werte in Sekunden
+  get aufgenommenSec() {
+    return this.ring.total / this.rate;
+  }
+
+  // Ändert sich der Ausgleich der App-Uhr nach dem Start, rechnet man eine Ankunftszeit von heute auf den Rahmen des Starts zurück
+  imStartRahmen(jetztMs) {
+    return jetztMs - this.#nachgang();
+  }
+
   // Aufnahme verwerfen, z. B. wenn das Mikrofon aus- und wieder eingeschaltet wird: die Lücke dazwischen
   // würde sonst die Zuordnung von Index zu UTC verschieben
   zuruecksetzen() {

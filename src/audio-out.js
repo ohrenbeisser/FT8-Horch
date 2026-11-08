@@ -4,6 +4,8 @@
 // Abspielen auf die Rate des Geräts um. Die Lautstärke stellt der Nutzer am Handy ein, die App
 // kann sie nicht setzen.
 
+import { setzeAusgang } from './audiogeraete.js';
+
 export const MAX_VERSPAETUNG_SEC = 1.5; // später als das nach dem Slotbeginn startet die App nicht mehr
 
 // Plant den Start. startUtcMs ist der gewünschte Zeitpunkt, an dem der Ton hörbar sein soll.
@@ -12,28 +14,42 @@ export function planStart(jetztMs, startUtcMs, latenzSec, maxVerspaetungSec = MA
   const bisStartSec = (startUtcMs - jetztMs) / 1000;
   const vorlauf = bisStartSec - latenzSec;
   if (bisStartSec < -maxVerspaetungSec) return { moeglich: false, grund: 'zu_spaet', vorlaufSec: 0 };
-  return { moeglich: true, vorlaufSec: Math.max(0, vorlauf), verspaetungSec: Math.max(0, -bisStartSec) };
+  // Der Ton braucht die Latenz bis zum Lautsprecher: Was davon nicht durch früheren Start auszugleichen ist, wird übersprungen
+  return { moeglich: true, vorlaufSec: Math.max(0, vorlauf), verspaetungSec: Math.max(0, -vorlauf) };
 }
 
 export class AudioOut {
   #ctx = null;
+  #sink = ''; // zuletzt eingestellter Lautsprecher
 
   // jetzt: die Uhr der App (ausgeglichen, siehe clock.js), nicht die rohe Systemzeit
-  constructor({ jetzt = () => Date.now() } = {}) {
+  // zusatzMs: vom Nutzer eingetragene Latenz, die der Browser nicht kennt (zum Beispiel Bluetooth-Lautsprecher)
+  // ausgangId: Kennung des gewählten Lautsprechers (leer = Standardgerät), wird bei jedem start() abgeglichen
+  constructor({ jetzt = () => Date.now(), zusatzMs = () => 0, ausgangId = () => '' } = {}) {
     this.jetzt = jetzt;
+    this.zusatzMs = zusatzMs;
+    this.ausgangId = ausgangId;
   }
 
   // Muss aus einer Nutzeraktion (Tipp) aufgerufen werden, sonst startet der Browser den Ton nicht.
   async start() {
     this.#ctx ??= new AudioContext({ latencyHint: 'interactive' });
+    const id = this.ausgangId() || '';
+    if (id !== this.#sink && await setzeAusgang(this.#ctx, id)) this.#sink = id;
     if (this.#ctx.state !== 'running') await this.#ctx.resume();
     return this.#ctx;
   }
 
-  // Latenz bis zum Lautsprecher in Sekunden. outputLatency gibt es nicht in jedem Browser.
+  // Zusatzlatenz des Nutzers in Sekunden (nie negativ)
+  get zusatzSec() {
+    return Math.max(0, Number(this.zusatzMs()) || 0) / 1000;
+  }
+
+  // Latenz bis zum Lautsprecher in Sekunden, einschließlich der Zusatzlatenz.
+  // outputLatency gibt es nicht in jedem Browser.
   get latencySec() {
-    if (!this.#ctx) return 0;
-    return (this.#ctx.baseLatency ?? 0) + (this.#ctx.outputLatency ?? 0);
+    const browser = this.#ctx ? (this.#ctx.baseLatency ?? 0) + (this.#ctx.outputLatency ?? 0) : 0;
+    return browser + this.zusatzSec;
   }
 
   // Spielt samples ab. startUtcMs = null startet sofort. Gibt ein Handle mit stop() und dem
@@ -64,5 +80,6 @@ export class AudioOut {
   async close() {
     if (this.#ctx) await this.#ctx.close();
     this.#ctx = null;
+    this.#sink = '';
   }
 }

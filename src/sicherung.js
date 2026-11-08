@@ -30,6 +30,8 @@ const PRUEFER = {
   autoSkip: (v) => ['nie', 'heute', 'immer'].includes(v) && v,
   txHalten: (v) => (v === 0 || v === 1) && v,
   cqWeiter: (v) => (v === 0 || v === 1) && v,
+  anrufMelden: (v) => (v === 0 || v === 1) && v,
+  ausZusatzMs: (v) => zahl(v) && v >= 0 && v <= 1000 && Math.round(v),
 };
 export const SICHERUNGS_SCHLUESSEL = Object.keys(PRUEFER);
 

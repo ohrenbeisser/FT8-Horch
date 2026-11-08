@@ -14,6 +14,9 @@ import { slotInfo, nextSlotStart } from './clock.js';
 import { createProfile, SAMPLE_RATE, VORLAUF_JE_KT_SEC } from './profile.js';
 
 const DEDUP_TOENE = 4; // gleiche Nachricht in so vielen Tonabständen Entfernung gilt als dasselbe Signal (wie in decoder.js)
+// Früher Durchgang bei kt >= 2: nur die besten Kandidaten prüfen. Fehlversuche kosten dort die meiste Zeit (docs/messung_decodezeit_2026-11-08.md),
+// und der späte Durchgang holt den Rest nach. Bei kt = 1 bleibt es bei der Vorgabe des Decoders.
+export const FRUEH_MAX_KANDIDATEN = 30;
 const AUFBEWAHREN_FENSTER = 8; // so viele Fenster bleiben in den Merklisten
 
 export class Station {
@@ -133,7 +136,9 @@ export class Station {
     const bis = Math.min(jetzt, startMs + this.slotMs);
     const fenster = this.recorder.sliceWindow(startMs, bis, this.leadSec);
     if (!fenster) return;
-    const ergebnis = await this.decodeFn(fenster.samples, this.profile, { leadSec: fenster.leadSec, durchgang });
+    const ergebnis = await this.decodeFn(fenster.samples, this.profile, {
+      leadSec: fenster.leadSec, durchgang, ...(durchgang === 0 && this.profile.kt >= 2 ? { maxCandidates: FRUEH_MAX_KANDIDATEN } : {}),
+    });
 
     const parity = idx % 2 === 0 ? 'even' : 'odd';
     const bekannt = this.seen.get(idx) ?? [];

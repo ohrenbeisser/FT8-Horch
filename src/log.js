@@ -74,7 +74,12 @@ export class Datenbank {
         const db = anfrage.result;
         for (const n of ['qso', 'protokoll']) if (!db.objectStoreNames.contains(n)) db.createObjectStore(n, { keyPath: 'id', autoIncrement: true });
       };
-      anfrage.onsuccess = () => ok(anfrage.result);
+      anfrage.onsuccess = () => {
+        const db = anfrage.result;
+        // Fordert eine neuere Fassung der App eine Schemaänderung an, geben wir die Verbindung frei (sonst bliebe sie blockiert)
+        db.onversionchange = () => { db.close(); this.db = null; };
+        ok(db);
+      };
       anfrage.onerror = () => { this.db = null; fehler(anfrage.error); };
     });
     return this.db;

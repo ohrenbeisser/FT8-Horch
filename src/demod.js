@@ -9,6 +9,47 @@
 import { GRAY, NUM_SYMBOLS, NUM_DATA_SYMBOLS, LDPC_N } from './constants.js';
 import { SAMPLE_RATE } from './profile.js';
 
+// Träger je Ton über das Fenster, die Phase beginnt am Fensteranfang bei null (nur der Betrag zählt). Der Fensterwert
+// wird einmal je Länge berechnet, Cosinus und Sinus durch Drehung eines Zeigers (alle 256 Schritte neu aus der Winkelfunktion,
+// damit sich der Rundungsfehler nicht aufsummiert). Das spart den größten Teil der Winkelfunktionen je Aufruf.
+const hannCache = new Map();
+function hann(laenge) {
+  let g = hannCache.get(laenge);
+  if (!g) {
+    g = new Float64Array(laenge);
+    for (let j = 0; j < laenge; j++) g[j] = Math.sin((Math.PI * j) / laenge) ** 2;
+    hannCache.set(laenge, g);
+  }
+  return g;
+}
+
+function traeger(laenge, breit, f0, abstand) {
+  const g = breit ? hann(laenge) : null;
+  const cos = [];
+  const sin = [];
+  for (let n = 0; n < 8; n++) {
+    const w = (2 * Math.PI * (f0 + n * abstand)) / SAMPLE_RATE;
+    const dc = Math.cos(w);
+    const ds = Math.sin(w);
+    const c = new Float64Array(laenge);
+    const s = new Float64Array(laenge);
+    let pc = 1;
+    let ps = 0;
+    for (let j = 0; j < laenge; j++) {
+      if ((j & 255) === 0) { pc = Math.cos(w * j); ps = Math.sin(w * j); }
+      const f = g ? g[j] : 1;
+      c[j] = f * pc;
+      s[j] = f * ps;
+      const nc = pc * dc - ps * ds;
+      ps = pc * ds + ps * dc;
+      pc = nc;
+    }
+    cos.push(c);
+    sin.push(s);
+  }
+  return { cos, sin };
+}
+
 // Leistung der 8 Töne je Symbol. startSec: Beginn von Symbol 0 in den samples. Was außerhalb der
 // Aufnahme liegt, zählt als Stille.
 //
@@ -24,19 +65,7 @@ export function symbolPowers(samples, profil, { startSec, f0 = profil.f0, fenste
   const laenge = breit ? 2 * nsps : nsps;
   const vorlauf = breit ? nsps / 2 : 0; // das Fenster beginnt eine halbe Symboldauer vor dem Symbol
 
-  // Träger je Ton über das Fenster, die Phase beginnt am Fensteranfang bei null (nur der Betrag zählt)
-  const cos = [];
-  const sin = [];
-  for (let n = 0; n < 8; n++) {
-    const w = (2 * Math.PI * (f0 + n * profil.toneSpacing)) / SAMPLE_RATE;
-    cos.push(new Float64Array(laenge));
-    sin.push(new Float64Array(laenge));
-    for (let j = 0; j < laenge; j++) {
-      const g = breit ? Math.sin((Math.PI * j) / laenge) ** 2 : 1; // Fensterwert
-      cos[n][j] = g * Math.cos(w * j);
-      sin[n][j] = g * Math.sin(w * j);
-    }
-  }
+  const { cos, sin } = traeger(laenge, breit, f0, profil.toneSpacing);
 
   const skala = 2 / nsps; // Summe der Fensterwerte ist bei beiden Formen gleich nsps
   const aus = [];

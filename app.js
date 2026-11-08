@@ -2,6 +2,9 @@
 import { Clock } from './src/clock.js';
 import { createProfile, checkProfile, KT_WERTE, KF_WERTE } from './src/profile.js';
 import { einstellung, setzeEinstellung, beiAenderung } from './src/settings.js';
+import { initSchublade } from './src/schublade.js';
+import './src/dialogkopf.js';
+import { erzeugeAudioEinstellungen } from './audio-einst.js';
 import { erkenneSprache, ladeSprache, aktuelleSprache, t, uebersetzeSeite, zahl } from './src/i18n.js';
 import { erzeugeQsoAnsicht, hms } from './qso-view.js';
 import { pruefeZeit, holeServerDatum, offsetAusMessung } from './src/zeitpruefung.js';
@@ -52,6 +55,9 @@ function meldung(text) {
 // Navigation
 // Seiten außerhalb der vier Ziele: Hilfe, Über, Einstellungen. Jede hat ihren Eintrag in der Navigation.
 const SEITEN = { hilfe: 'btnHilfe', ueber: 'btnUeber', einstellungen: 'btnEinst' };
+const TITEL = { qso: 'nav.qso', codierung: 'nav.coding', labor: 'nav.lab', log: 'nav.log', hilfe: 'head.help', ueber: 'head.about', einstellungen: 'head.settings' };
+let aktuellerTab = 'qso';
+function setzeTitel() { $('titel').textContent = t(TITEL[aktuellerTab]); document.title = `${t('app.name')} – ${t(TITEL[aktuellerTab])}`; }
 
 function zeigeTab(name) {
   if (SEITEN[name]) {
@@ -63,7 +69,8 @@ function zeigeTab(name) {
     if (name === 'einstellungen') fuelleEinstellungen();
   }
   for (const sec of document.querySelectorAll('.tab')) sec.classList.toggle('aktiv', sec.id === `tab-${name}`);
-  for (const b of document.querySelectorAll('#nav button')) {
+  aktuellerTab = name; setzeTitel();
+  for (const b of document.querySelectorAll('#schublade .sch-eintrag')) {
     if (b.dataset.tab === name || (SEITEN[name] && b.id === SEITEN[name])) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current');
   }
   document.querySelector('main').scrollTop = 0;
@@ -71,23 +78,44 @@ function zeigeTab(name) {
 }
 
 // Über: Daten zur App und zum Autor
+// Verwendete Komponenten von Dritten: Name, Urheber, Lizenz mit Link, Verwendung (Text in lang/ unter about.comp.<id>)
+const KOMPONENTEN = [
+  { id: 'wsjtx', name: 'WSJT-X', von: 'Joe Taylor (K1JT), Steve Franke (K9AN), Bill Somerville (G4WJS)', lizenz: 'GPL-3.0', url: 'https://www.gnu.org/licenses/gpl-3.0.html' },
+  { id: 'ft8lib', name: 'ft8_lib', von: 'Karlis Goba (YL3JG)', lizenz: 'MIT', url: 'https://opensource.org/license/mit' },
+  { id: 'roboto', name: 'Roboto, Roboto Mono', von: 'The Roboto Project Authors', lizenz: 'SIL OFL 1.1', url: 'https://openfontlicense.org' },
+  { id: 'montserrat', name: 'Montserrat Alt1', von: 'The Montserrat Project Authors', lizenz: 'SIL OFL 1.1', url: 'https://openfontlicense.org' },
+  { id: 'symbols', name: 'Material Symbols', von: 'Google', lizenz: 'Apache 2.0', url: 'https://www.apache.org/licenses/LICENSE-2.0' },
+  { id: 'mcu', name: 'Material Color Utilities', von: 'Google', lizenz: 'Apache 2.0', url: 'https://www.apache.org/licenses/LICENSE-2.0' },
+];
+const LINK_LIZENZ = 'https://www.gnu.org/licenses/gpl-3.0.html';
+const LINK_SEITE = 'https://ohrenbeisser.de';
+const LINK_PROJEKT = 'https://github.com/ohrenbeisser/FT8-Horch';
+
 function fuelleUeber() {
-  const zeile = (ziel, k, w) => {
-    const d = document.createElement('div');
-    d.className = 'messzeile';
-    const s1 = document.createElement('span'); s1.textContent = k;
-    const s2 = document.createElement('span'); s2.textContent = w;
-    d.append(s1, s2);
+  const el = (tag, klasse, text) => { const e = document.createElement(tag); if (klasse) e.className = klasse; if (text !== undefined) e.textContent = text; return e; };
+  const link = (text, href) => { const a = el('a', '', text); a.href = href; a.target = '_blank'; a.rel = 'noopener noreferrer'; return a; };
+  // wert: Text oder fertiges Element (Link)
+  const zeile = (ziel, k, wert) => {
+    const d = el('div', 'messzeile');
+    const w = el('span'); w.append(wert);
+    d.append(el('span', '', k), w);
     ziel.append(d);
   };
-  const app = $('ueberApp'), autor = $('ueberAutor');
-  app.replaceChildren(); autor.replaceChildren();
+  const app = $('ueberApp'), komp = $('ueberKomponenten');
+  app.replaceChildren(); komp.replaceChildren();
   const stand = new Intl.DateTimeFormat(aktuelleSprache(), { dateStyle: 'long', timeZone: 'UTC' }).format(new Date(`${STAND}T00:00:00Z`));
-  zeile(app, t('about.name'), t('app.name'));
   zeile(app, t('about.version'), VERSION);
-  zeile(app, t('about.stand'), stand);
-  zeile(app, t('about.license'), t('about.licenseText'));
-  zeile(autor, t('about.authorLabel'), t('about.authorValue'));
+  zeile(app, t('about.build'), stand);
+  zeile(app, t('about.license'), link('GPL-3.0-or-later', LINK_LIZENZ));
+  zeile(app, t('about.authorLabel'), t('about.authorValue'));
+  zeile(app, t('about.website'), link('ohrenbeisser.de', LINK_SEITE));
+  zeile(app, t('about.project'), link('github.com/ohrenbeisser/FT8-Horch', LINK_PROJEKT));
+  for (const k of KOMPONENTEN) {
+    const d = el('div', 'komponente');
+    const kopf = el('div', 'komp-kopf'); kopf.append(el('strong', '', k.name), link(k.lizenz, k.url));
+    d.append(kopf, el('div', 'hint body-sm', `${k.von}. ${t(`about.comp.${k.id}`)}`));
+    komp.append(d);
+  }
   // Geladene Fassung der Dateien (Name des Caches im Service Worker): zeigt, ob nach einer Änderung die neue Fassung läuft
   try { window.caches?.keys().then((namen) => { const k = namen.find((n) => n.startsWith('horch-')); if (k) zeile(app, t('about.cache'), k); }).catch(() => {}); } catch { /* ohne Cache keine Anzeige */ }
 }
@@ -166,11 +194,15 @@ function profilGeaendert() {
 
 // ---------------------------------------------------------------------------------------------
 // Einstellungen
+let audioEinst = null;
 function fuelleEinstellungen() {
+  audioEinst?.aktualisiere();
   $('zeitquelle').value = zeitquelle();
   $('autoSkip').value = ['nie', 'heute', 'immer'].includes(einstellung('autoSkip')) ? einstellung('autoSkip') : 'heute';
   $('txHalten').value = String(einstellung('txHalten') === 1 ? 1 : 0);
   $('cqWeiter').value = String(einstellung('cqWeiter') === 1 ? 1 : 0);
+  $('anrufMelden').value = String(einstellung('anrufMelden') === 0 ? 0 : 1);
+  $('ausZusatzMs').value = String(einstellung('ausZusatzMs'));
   $('call').value = einstellung('call');
   $('grid').value = einstellung('grid');
   $('lang').value = einstellung('lang') || erkenneSprache('');
@@ -191,6 +223,8 @@ async function wechselSprache(code) {
   labor?.profilGeaendert();
   labor?.uebersetzt();
   codierung?.neuZeichnen();
+  setzeTitel();
+  audioEinst?.aktualisiere();
   zeigeZeit();
 }
 
@@ -345,6 +379,8 @@ async function start() {
   const code = erkenneSprache(einstellung('lang'));
   await ladeSprache(code);
   uebersetzeSeite();
+  initSchublade();
+  audioEinst = erzeugeAudioEinstellungen({ t, einstellung, setzeEinstellung });
   wendeThemaAn();
 
   logAnsicht = erzeugeLogAnsicht({ meldung, bestaetige, meinCall: () => einstellung('call'), meinGrid: () => einstellung('grid'), profil });
@@ -362,7 +398,7 @@ async function start() {
   qso.setzeSperre(() => (labor.testLaeuft() ? t('vt.locked') : null));
   window.__horch = { qso: qso.debug, uhr, logAnsicht, audio: qso.audio, codierung, labor };
 
-  for (const b of document.querySelectorAll('#nav button[data-tab]')) b.addEventListener('click', () => zeigeTab(b.dataset.tab));
+  for (const b of document.querySelectorAll('#schublade .sch-eintrag[data-tab]')) b.addEventListener('click', () => zeigeTab(b.dataset.tab));
   let tab = 'qso';
   try { tab = sessionStorage.getItem('horch_tab') || 'qso'; } catch { /* egal */ }
   zeigeTab(document.getElementById(`tab-${tab}`) ? tab : 'qso');
@@ -396,7 +432,12 @@ async function start() {
   $('btnLeerenJa').addEventListener('click', async () => { $('dlgLeeren').close(); const f = aktionNachJa; aktionNachJa = null; await f?.(); });
   $('btnZeit').addEventListener('click', pruefeUhr);
   $('autoSkip').addEventListener('change', () => setzeEinstellung('autoSkip', $('autoSkip').value));
-  for (const id of ['txHalten', 'cqWeiter']) $(id).addEventListener('change', () => setzeEinstellung(id, Number($(id).value)));
+  $('ausZusatzMs').addEventListener('change', () => {
+    const ms = Math.min(1000, Math.max(0, Math.round(Number($('ausZusatzMs').value) || 0)));
+    $('ausZusatzMs').value = String(ms);
+    setzeEinstellung('ausZusatzMs', ms);
+  });
+  for (const id of ['txHalten', 'cqWeiter', 'anrufMelden']) $(id).addEventListener('change', () => setzeEinstellung(id, Number($(id).value)));
   $('zeitquelle').addEventListener('change', () => {
     setzeEinstellung('zeitquelle', $('zeitquelle').value);
     if (zeitquelle() === 'system') { uhr.offsetMs = 0; serverzeitAktiv = false; zeigeZeit(); } else pruefeUhr();

@@ -5,6 +5,8 @@
 // Testgeräten (Pixel 10a, Tablet mit Android 10, Chrome 155) hat das funktioniert (docs/messbericht_s1.md).
 
 import { Recorder } from './recorder.js';
+import { StartSchaetzer } from './startschaetzer.js';
+import { oeffneMikrofon } from './audiogeraete.js';
 import { SAMPLE_RATE, ringKapazitaetSec } from './profile.js';
 
 // Zeit des ersten Abtastwerts: jetzt, minus Blockdauer, minus Eingangslatenz, minus Filterverzögerung
@@ -17,6 +19,7 @@ export class AudioIn {
     this.jetzt = jetzt;
     this.onBlock = onBlock;
     this.recorder = new Recorder({ rate: SAMPLE_RATE, capacitySec, versatz });
+    this.schaetzer = new StartSchaetzer();
     this.ctx = null;
     this.strom = null;
     this.info = null;
@@ -26,11 +29,9 @@ export class AudioIn {
 
   // Muss aus einer Nutzeraktion heraus aufgerufen werden
   async start({ deviceId = null, raw = true } = {}) {
-    const audio = {
-      echoCancellation: !raw, noiseSuppression: !raw, autoGainControl: !raw, channelCount: 1,
-    };
-    if (deviceId) audio.deviceId = { exact: deviceId };
-    this.strom = await navigator.mediaDevices.getUserMedia({ audio });
+    // Fehlt das gewählte Gerät (abgesteckt), läuft das Standardgerät und abweichung ist true
+    const { stream, abweichung } = await oeffneMikrofon(deviceId, raw);
+    this.strom = stream;
     const spur = this.strom.getAudioTracks()[0];
     const einstellungen = spur.getSettings();
     this.ctx = new AudioContext({ latencyHint: 'interactive' });
@@ -38,7 +39,7 @@ export class AudioIn {
     const quelle = this.ctx.createMediaStreamSource(this.strom);
     const knoten = new AudioWorkletNode(this.ctx, 'ft8-capture');
     this.eingangsLatenzMs = (einstellungen.latency ?? 0) * 1000;
-    this.info = { label: spur.label, einstellungen, rate: this.ctx.sampleRate, raw };
+    this.info = { label: spur.label, einstellungen, rate: this.ctx.sampleRate, raw, abweichung };
 
     knoten.port.onmessage = (ev) => {
       const d = ev.data;
@@ -48,10 +49,19 @@ export class AudioIn {
         this.recorder.starte(aufnahmeStartMs(this.jetzt(), blockMs, this.eingangsLatenzMs, this.verzoegerungMs));
       }
       this.recorder.push(d.samples);
+      this.#fuehreStartNach();
       this.onBlock?.(d);
     };
     quelle.connect(knoten);
     return this.info;
+  }
+
+  // Bei jedem Block: Start neu schätzen (kleinste Verzögerung der letzten Minuten), siehe startschaetzer.js
+  #fuehreStartNach() {
+    const r = this.recorder;
+    const sec = r.aufgenommenSec;
+    const roh = r.imStartRahmen(this.jetzt()) - sec * 1000 - this.eingangsLatenzMs - this.verzoegerungMs;
+    r.korrigiereStart(this.schaetzer.fuegeHinzu(sec, roh));
   }
 
   async stop() {
@@ -60,5 +70,6 @@ export class AudioIn {
     this.ctx = null;
     this.strom = null;
     this.recorder.zuruecksetzen();
+    this.schaetzer.zuruecksetzen();
   }
 }

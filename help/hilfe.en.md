@@ -18,7 +18,7 @@ That is how the small script turned into an app. It is called **FT8-Horch** ("Ho
 
 Not in the mood for manuals? Understandable. Here is the short version:
 
-1. Tap **Settings** at the bottom, enter your callsign and your locator (for example `DL6LG` and `JO60`).
+1. Open the menu (☰) at the top left, choose **Settings**, enter your callsign and your locator (for example `DL6LG` and `JO60`).
 2. Turn on the **automatic time** on the device. The clock must be right to the second, more on that in a moment.
 3. Back in the **QSO** tab, slide the **microphone switch** (crossed-out microphone on the left, microphone on the right) to the right and answer the microphone permission question with "Yes".
 4. Put a second device with the app next to it (or play a real FT8 signal from a loudspeaker). When the other device calls CQ, the app answers by itself, because the **Auto-reply** switch above the band activity is on at start. Or you tap a line with a green edge. Done, the app runs the QSO on its own.
@@ -51,13 +51,13 @@ And now the honest limits, so you are not surprised:
 
 ### Callsign and locator
 
-You reach the settings at the bottom via **Settings**. Enter callsign and locator first. The locator has four characters, for example `JO60`.
+You reach the settings via the menu at the top left, **Settings** is at the very bottom. Enter callsign and locator first. The locator has four characters, for example `JO60`.
 
 If you do not know your locator by heart, tap the crosshair icon next to the field. The browser then asks for your location, and the app works out the locator from it. This happens only on your device, the coordinates are neither stored nor sent anywhere. You can overwrite the locator by hand at any time.
 
 Changes apply immediately, there is no Save button. If callsign or locator are not valid, the app says so with a yellow band, and calling CQ does not work then.
 
-Below that you set language (German or English) and appearance (follow the system, light or dark). In the **Automation** card you decide whether auto-reply skips stations that are already in your log: only those of today (UTC, the default), all from the whole log, or none. Here you also choose whether the app takes the other station's frequency when replying or keeps your own, and whether it keeps calling CQ after a QSO from your own CQ (more under "Calling CQ or replying").
+Below that you set language (German or English) and appearance (follow the system, light or dark). In the **Automation** card you decide whether auto-reply skips stations that are already in your log: only those of today (UTC, the default), all from the whole log, or none. Here you also choose whether the app takes the other station's frequency when replying or keeps your own, and whether it keeps calling CQ after a QSO from your own CQ (more under "Calling CQ or replying"). You can also choose whether the app **notifies you of a call to you**: when a message addressed to your callsign arrives, it briefly shows "Call from …", vibrates the phone and, while the page is in the background, puts a dot in front of the page title. There is deliberately no sound, because the microphone would hear it.
 
 ![The Automation card](bilder/en/einstellungen-automatik.png "The Automation card in the settings.")
 
@@ -69,7 +69,7 @@ Now the topic I stumbled over myself: FT8 works in a 15-second rhythm by world t
 
 My test PC was once 18 seconds off. FT8 forgives a lot, but not 18 seconds.
 
-So: turn on the automatic time on the device (on Android that is usually "Automatic date and time"). The app **never** changes the clock of your device, a web app is not allowed to. It always works with the system time.
+So: turn on the automatic time on the device (on Android that is usually "Automatic date and time"). The app **never** changes the clock of your device, a web app is not allowed to. It always works with the system time. The app tracks the timing of the recording itself: from the arrival of the microphone blocks it continuously estimates the start time of the recording, which compensates a delay at start and the difference between the audio clock and the system clock. The DT of the other stations therefore does not drift away, even in long sessions.
 
 What the app can do is check whether the clock is right. Under **Clock** in the settings, tap **Check clock**. The app then asks the server it was loaded from for the time nine times and works out how far off your device is. You get, for example, "Clock is fine (offset +0.1 s ± 0.1 s)". The "±" is the measurement uncertainty, so the check is accurate to about a tenth of a second, not to the millisecond. At start the check runs once by itself if you are online.
 
@@ -106,9 +106,9 @@ When there is a new version, the app reloads by itself as long as the microphone
 
 ## The interface at a glance
 
-At the top is the header: logo and name on the left, world time (UTC) with seconds in the middle, the **profile chip** on the right. It shows which profile you are working with, for example "FT8 · 1500 Hz". A tap on it opens the profile settings. If the profile is not standard FT8 it says "FT8 variant" there, and on narrow screens the chip moves to a line of its own.
+At the top is the header: the menu symbol (☰) and the name of the current page on the left, then world time (UTC) with seconds and the **profile chip** on the right. It shows which profile you are working with, for example "FT8 · 1500 Hz". A tap on it opens the profile settings. If the profile is not standard FT8 it says "FT8 variant" there, and on narrow screens the chip moves to a line of its own.
 
-At the bottom (on wide screens on the left) is the navigation with seven entries: **QSO**, **Coding**, **Lab** and **Log** are the four main destinations. Behind the divider are **Help**, **About** and **Settings**, which open as pages of their own. The active entry has a red background. A tap on the entry of the open page or on "Back" takes you back to where you were before.
+The navigation lives in a **drawer**: a tap on the menu symbol (☰) at the top left slides it in from the left, a tap next to it or the Esc key closes it. From 1100 pixels width (PC, tablet in landscape) it stays on the left permanently and the symbol is gone. At the top of the drawer you see the ear logo with the name. Below are seven entries: **QSO**, **Coding**, **Lab** and **Log** are the four main destinations. Behind the divider are **Help**, **About** and **Settings**, which open as pages of their own. The active entry has a red background. A tap on the entry of the open page or on "Back" takes you back to where you were before.
 
 ![The navigation](bilder/en/navigation.png "The navigation: four destinations, divider, three pages.")
 
@@ -116,7 +116,7 @@ Whether light or dark is up to you in the settings. In the dark the red glows ju
 
 ![The QSO tab in dark mode](bilder/en/qso-dunkel.png "The same tab in dark mode.")
 
-On wide screens (tablet in landscape, PC) the navigation is on the left, and band activity and QSO window sit side by side. On narrow phones everything is a bit smaller (90 percent) so more fits on the screen.
+On wide screens (from 1100 pixels, tablet in landscape, PC) the navigation stays on the left, and band activity and QSO window sit side by side. On narrow phones everything is a bit smaller (90 percent) so more fits on the screen.
 
 ![The QSO tab on a wide screen](bilder/en/qso-breit.png "Wide view: navigation on the left, the two lists side by side.")
 
@@ -125,6 +125,8 @@ On wide screens (tablet in landscape, PC) the navigation is on the left, and ban
 ### Microphone, control bar and level
 
 In the **QSO** tab you slide the **microphone switch** to the right. The browser asks whether the app may use the microphone, and it must, otherwise it hears nothing. At the same time the app prepares the sound output, because browsers only play sound if you tapped somewhere beforehand.
+
+Which microphone and which speaker the app uses is set in the settings under **Audio**. The default is the device your system is using right now. A radio with USB audio (for example IC-705), a USB sound card or a virtual audio cable shows up there as a device of its own. The browser only shows the names once you have allowed microphone access, which is what the **Show devices** button is for. The microphone changes the next time you switch it on, the speaker with the next sound. If the chosen device is not connected, the app uses the default device and says so in the QSO window. Chrome can switch the speaker, Firefox cannot yet.
 
 The app turns off echo cancellation, noise suppression and automatic gain of the device as far as the device allows. Those helpers are meant for phone calls and would rather ruin the FT8 tones. It also keeps the screen awake.
 
@@ -181,11 +183,11 @@ If you call CQ it goes like this: you send Tx6, someone answers with Tx1, you se
 
 The status line above the level bar tells you where you are: "QSO: in QSO with DL1ABC Tx3" means you are in a QSO with DL1ABC and Tx3 comes next. The window in which you transmit is the opposite of the other station's window.
 
-If the other station does not answer, the app repeats the message up to five times. It sends the RR73 up to three times if the 73 stays away. After that it gives up, with RR73 marked "unconfirmed". After a completed QSO the app transmits nothing more by itself. It does not secretly keep calling CQ just because you are bored. Unless you chose "keep calling CQ" in the settings under **Automation**, then it starts over after a QSO from your own CQ.
+If the other station does not answer, the app repeats the message up to five times. It sends the RR73 up to three times if the 73 stays away. After that it gives up, with RR73 marked "unconfirmed". After a completed QSO the app transmits nothing more by itself. It does not secretly keep calling CQ just because you are bored. Unless you chose "keep calling CQ" in the settings under **Automation**, then it starts over after a QSO from your own CQ. If the other station sent RR73 without the app ever having heard a report from it, the app closes the QSO marked "unconfirmed" and still sends the 73.
 
 The QSO lands in the **Log** automatically, confirmed or unconfirmed. With **Stop** (far right, only active while you call CQ or a QSO is running) you stop the transmission and the QSO at any time.
 
-On the technology behind it: the app decodes every window twice, once early (after about 13.7 seconds) and once at the end (after 15.05 seconds). Which message it sends next it decides 0.4 seconds before the transmit window. The status line then shows how long both passes took last time (`[ 520/ 610ms]`). The late pass does not hold up the transmission. If the early pass only finishes more than a second after the window start, the reply misses its window and goes out 30 seconds later. In my tests the decoder took about 1.0 to 1.3 seconds on the Pixel 10a, 0.9 to 1.5 seconds on the old tablet and much less on the PC. That is enough as long as no second pass shares the computing time.
+On the technology behind it: the app decodes every window twice, once early (after about 13.7 seconds) and once at the end (after 15.05 seconds). Which message it sends next it decides 0.4 seconds before the transmit window. The status line then shows how long both passes took last time (`[ 520/ 610ms]`). The late pass does not hold up the transmission. If the early pass only finishes more than a second after the window start, the reply misses its window and goes out 30 seconds later. In my tests the decoder took about 1.0 to 1.3 seconds on the Pixel 10a, 0.9 to 1.5 seconds on the old tablet and much less on the PC. That is enough as long as no second pass shares the computing time. At time factor 2 and higher the early pass only checks the 30 best candidates, because otherwise the failed attempts cost too much time. Whatever slips through is found by the late pass, and the band activity marks it "(late)". The app's clock tick comes from the microphone blocks and not only from a timer, so it keeps running when the browser throttles the page in the background. When playback starts, the app also accounts for the output latency if the transmission already begins late.
 
 ## Profile: time and tone spacing
 
@@ -236,6 +238,8 @@ This is the measurement for everyone who wants to know why their devices cannot 
 ![The delay measurement](bilder/en/laufzeit.png "The delay measurement. Example with a simulated sound path.")
 
 You get the median, the spread, the number of valid measurements and all single values. It also says what the browser knows about its own latencies. The result is the sum of output and input, exactly what later shows up as DT with two identical devices. Below 0.1 seconds it is not critical, up to 0.5 seconds it is acceptable, above that it gets too much.
+
+With a Bluetooth speaker the browser often does not know its delay (usually 150 to 300 milliseconds). In that case enter an **extra latency** under **Audio** in the settings: the app then sends earlier by that amount. Add the measured deviation to the current value and measure again. Close to 0 is good. A Bluetooth microphone is not a good idea, it switches to a narrow-band voice profile.
 
 ### Connection test with a second device
 
@@ -419,7 +423,7 @@ Under **About** you find version, licence, author and acknowledgements once more
 
 **Licence:** FT8-Horch is free software under the GNU General Public License, version 3 or later. You may read, change and pass on the source code as long as that happens under the same licence.
 
-**Privacy:** All data stays on your device. There are no accounts and no analytics. The only request the app makes is the question to its own server for the time during the clock check. Your log and the protocol live in the memory of the browser and leave the device only if you export them.
+**Privacy:** All data stays on your device. There are no accounts and no analytics. The only request the app makes is the question to its own server for the time during the clock check. Your log and the protocol live in the memory of the browser and leave the device only if you export them. A content security policy in the page allows the app only connections and content from its own origin, so loading anything from the network is technically ruled out.
 
 **Thanks:** FT8 comes from Joe Taylor (K1JT), Steve Franke (K9AN) and Bill Somerville (G4WJS) and is part of WSJT-X. The constants of the app (Costas pattern, Gray code, LDPC matrices) come from there and reached me through ft8_lib by kgoba (MIT licence). The font is Roboto, the title at the top is set in Montserrat Alt1 (both SIL Open Font License), the icons are Material Symbols (Apache License 2.0). The colours (neutral grey with the red `#c0001a`) are computed by a small script in the source code, it needs no library.
 

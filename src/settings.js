@@ -1,5 +1,5 @@
 // Einstellungen im Browser (localStorage, der Browser darf den Zugriff verweigern). E7 baut darauf auf.
-const VORGABEN = { call: '', grid: '', lang: '', theme: 'auto', kt: 1, kf: 1, txf: 1500, starts: 0, installHinweis: '', zeitquelle: 'server', autoSkip: 'heute', txHalten: 0, cqWeiter: 0, vtRolle: 'A', vtRunden: 4 };
+const VORGABEN = { call: '', grid: '', lang: '', theme: 'auto', kt: 1, kf: 1, txf: 1500, starts: 0, installHinweis: '', zeitquelle: 'server', autoSkip: 'heute', txHalten: 0, cqWeiter: 0, anrufMelden: 1, ausZusatzMs: 0, audioEingang: '', audioAusgang: '', vtRolle: 'A', vtRunden: 4 };
 const PRAEFIX = 'horch_';
 const hoerer = new Set();
 const werte = { ...VORGABEN };

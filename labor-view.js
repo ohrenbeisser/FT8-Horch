@@ -148,7 +148,7 @@ export function erzeugeLaborAnsicht({ audio, qsoAktiv, abonniere = () => () => {
         zeile(aus, t('lab.lat.spread'), `± ${zahl(Math.round(s.streuungMs), 0)} ms`);
         zeile(aus, t('lab.lat.valid'), `${s.n} / ${WIEDERHOLUNGEN}`);
         zeile(aus, t('lab.lat.single'), einzel.join('   '));
-        zeile(aus, t('lab.lat.reported'), `${t('lab.lat.out')} ${ms0(audio.ausgabe.latencySec * 1000).replace('+', '')}, ${t('lab.lat.in')} ${ms0(audio.mik.eingangsLatenzMs).replace('+', '')}, ${t('lab.lat.filter')} ${ms0(audio.mik.verzoegerungMs).replace('+', '')}`);
+        zeile(aus, t('lab.lat.reported'), `${t('lab.lat.out')} ${ms0(audio.ausgabe.latencySec * 1000).replace('+', '')}${audio.ausgabe.zusatzSec > 0 ? ` (${t('lab.lat.extra')} ${ms0(audio.ausgabe.zusatzSec * 1000).replace('+', '')})` : ''}, ${t('lab.lat.in')} ${ms0(audio.mik.eingangsLatenzMs).replace('+', '')}, ${t('lab.lat.filter')} ${ms0(audio.mik.verzoegerungMs).replace('+', '')}`);
         const betrag = Math.abs(s.medianMs);
         const unsicher = s.n < 3 || s.streuungMs > 60;
         const art = betrag <= 100 ? 'ok' : betrag <= 500 ? 'mid' : 'bad';

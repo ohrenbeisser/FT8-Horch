@@ -19,7 +19,7 @@ export const hms = (ms) => new Date(ms).toISOString().slice(11, 19);
 
 export function erzeugeQsoAnsicht({ uhr, profil, beiLog, beiProtokoll = () => {}, beiCodierung = () => {}, eintraege = async () => [], meldung }) {
   const sperre = new WakeLock();
-  const ausgabe = new AudioOut({ jetzt: () => uhr.now() });
+  const ausgabe = new AudioOut({ jetzt: () => uhr.now(), zusatzMs: () => einstellung('ausZusatzMs'), ausgangId: () => einstellung('audioAusgang') });
   const decoder = new DecoderClient();
   const spektrum = new Spectrogram({ fftSize: 4096, hop: 1024 });
   let station = null;
@@ -130,6 +130,18 @@ export function erzeugeQsoAnsicht({ uhr, profil, beiLog, beiProtokoll = () => {}
     } finally { autoBusy = false; }
   }
 
+  // Anruf an mich: Hinweis, Vibration und, solange die Seite im Hintergrund liegt, ein Punkt vor dem Seitentitel
+  const PUNKT = '● ';
+  function meldeAnruf(von) {
+    if (einstellung('anrufMelden') === 0) return;
+    meldung(t('qso.callIn', { call: von }));
+    try { navigator.vibrate?.([200, 100, 200]); } catch { /* nicht überall erlaubt */ }
+    if (document.hidden && !document.title.startsWith(PUNKT)) document.title = PUNKT + document.title;
+  }
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden && document.title.startsWith(PUNKT)) document.title = document.title.slice(PUNKT.length);
+  });
+
   let txSlot = null; // Fenster, dessen Sendung die Statuszeile gerade zeigt
   let sendeText = ''; // Nachricht, die gerade gesendet wird (leer, wenn nicht gesendet wird)
 
@@ -155,6 +167,8 @@ export function erzeugeQsoAnsicht({ uhr, profil, beiLog, beiProtokoll = () => {}
         zeile('band', e.pass === 1 ? `${text}  (${t('qso.passLate')})` : text, anMich ? 'anmich' : [m.kind === 'cq' ? 'cq' : '', imLog ? 'imlog' : ''].filter(Boolean).join(' '), klick, knopf);
         if (anMich) zeile('qso', `← ${hms(e.slotStartMs)} ${String(Math.round(s.snrDb)).padStart(3)} dB  ${s.text}`, 'anmich', null, knopf);
       }
+      const anrufer = e.signals.map((s) => parseMessage(s.text)).find((m) => m.kind === 'to' && m.to === meinCall());
+      if (anrufer && mikAn) meldeAnruf(anrufer.de);
       if (autoAn() && e.pass === 0) autoAntworten(e);
       else if (autoAn() && e.pass === 1 && station?.qso.state === 'idle' && e.signals.some((x) => parseMessage(x.text).kind === 'cq')) zeile('qso', t('qso.autoLate'), 'info');
       for (const u of e.unsupported) zeile('band', `${hms(e.slotStartMs)}        ${Math.round(u.f0)}  (${t('qso.unsupported')})`, 'info');
@@ -183,10 +197,21 @@ export function erzeugeQsoAnsicht({ uhr, profil, beiLog, beiProtokoll = () => {}
     station?.setTxF0(p.f0);
   }
 
+  // Takt der Station: vom Timer und von jedem Mikrofonblock (alle 100 ms). Chrome drosselt Timer in Hintergrundseiten auf eine
+  // Sekunde oder weniger, Nachrichten des Worklets aber nicht. Station.tick() ist gegen Überlappung gesichert.
+  let letzterTakt = 0;
+  function takt() {
+    const jetzt = performance.now();
+    if (jetzt - letzterTakt < 40) return;
+    letzterTakt = jetzt;
+    station?.tick();
+  }
+
   const mik = new AudioIn({
     jetzt: () => uhr.now(),
     versatz: () => uhr.offsetMs,
     onBlock: ({ samples, peak, clipped }) => {
+      takt();
       const db = 20 * Math.log10(peak + 1e-6);
       $('pegel').style.width = `${Math.min(100, Math.max(0, ((db + 60) / 60) * 100))}%`;
       $('pegel').classList.toggle('uebersteuert', !!clipped);
@@ -204,6 +229,7 @@ export function erzeugeQsoAnsicht({ uhr, profil, beiLog, beiProtokoll = () => {}
   // Schalter und Zustand des Mikrofons abgleichen
   function zeigeMik(an, gesperrt = false) {
     mikAn = an;
+    $('tab-qso').classList.toggle('mikaus', !an); // Schleier über Wasserfall und Listen, solange das Mikrofon aus ist
     $('btnMik').setAttribute('aria-checked', String(an));
     $('btnMik').disabled = gesperrt;
     $('btnCq').disabled = !an;
@@ -215,11 +241,12 @@ export function erzeugeQsoAnsicht({ uhr, profil, beiLog, beiProtokoll = () => {}
     if (mikAn) return mik.info;
     zeigeMik(false, true);
     try {
-      const info = await mik.start({ raw: true });
+      const info = await mik.start({ raw: true, deviceId: einstellung('audioEingang') || null });
       await sperre.halten();
       await ausgabe.start();
       zeigeMik(true);
       const roh = !info.einstellungen.echoCancellation && !info.einstellungen.noiseSuppression && !info.einstellungen.autoGainControl;
+      if (info.abweichung) zeile('qso', t('qso.micFallback'), 'info');
       zeile('qso', t('qso.micInfo', { label: info.label || '', rate: info.rate, raw: roh }), 'info');
       return info;
     } catch (e) {
@@ -278,7 +305,7 @@ export function erzeugeQsoAnsicht({ uhr, profil, beiLog, beiProtokoll = () => {}
     }
     $('btnHalt').disabled = !(mikAn && station && station.qso.state !== 'idle'); // Stop nur bei CQ oder QSO
     if (neu !== letzterStatus) { $('status').textContent = neu; letzterStatus = neu; }
-    station?.tick();
+    takt();
   }, 100);
 
   bauStation();

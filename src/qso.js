@@ -238,8 +238,8 @@ export class Qso {
           this.rr73Count = 0;
           break;
         case 'rr73':
-        case 'rrr': // Tx4: QSO ist bestätigt, noch ein 73 senden
-          this.#abschliessen(true);
+        case 'rrr': // Tx4: QSO ist bestätigt, noch ein 73 senden. Ohne gehörten Rapport bleibt es unbestätigt.
+          this.#abschliessen(this.rptRcvd !== null);
           this.state = 'closing';
           this.tx = 5;
           break;

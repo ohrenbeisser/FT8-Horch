@@ -18,7 +18,7 @@ So wurde aus dem kleinen Skript eine App. Sie heißt **FT8-Horch**, und wer sich
 
 Du hast keine Lust auf Handbücher? Verständlich. Hier die Kurzfassung:
 
-1. Unten auf **Einstell.** tippen, dein Rufzeichen und deinen Locator eintragen (zum Beispiel `DL6LG` und `JO60`).
+1. Oben links das Menü (☰) öffnen, **Einstellungen** wählen, dein Rufzeichen und deinen Locator eintragen (zum Beispiel `DL6LG` und `JO60`).
 2. Am Gerät die **automatische Uhrzeit** einschalten. Die Uhr muss auf die Sekunde stimmen, mehr dazu gleich.
 3. Zurück zum Reiter **QSO**, den **Mikrofon-Schalter** (links Mikrofon durchgestrichen, rechts Mikrofon) nach rechts schieben und die Frage nach der Mikrofon-Erlaubnis mit „Ja“ beantworten.
 4. Ein zweites Gerät mit der App danebenlegen (oder ein echtes FT8-Signal aus dem Lautsprecher abspielen). Ruft das andere Gerät CQ, antwortet die App von allein, denn der Schalter **Auto-Antwort** über der Band-Aktivität ist beim Start an. Alternativ tippst du auf eine Zeile mit grünem Rand. Fertig, die App fährt das QSO von allein.
@@ -51,13 +51,13 @@ Und jetzt die ehrlichen Grenzen, damit du dich nicht wunderst:
 
 ### Rufzeichen und Locator
 
-Die Einstellungen erreichst du unten über **Einstell.** (auf breiten Bildschirmen steht dort „Einstellungen“). Dort tragen sich zuerst Rufzeichen und Locator ein. Der Locator hat vier Zeichen, etwa `JO60`.
+Die Einstellungen erreichst du über das Menü oben links, ganz unten steht **Einstellungen**. Dort tragen sich zuerst Rufzeichen und Locator ein. Der Locator hat vier Zeichen, etwa `JO60`.
 
 Wenn du deinen Locator nicht auswendig weißt, tippe auf das Symbol mit dem Fadenkreuz neben dem Feld. Dann fragt der Browser nach deinem Standort, und die App rechnet daraus den Locator aus. Das passiert ausschließlich auf deinem Gerät, die Koordinaten werden weder gespeichert noch irgendwohin geschickt. Du kannst den Locator jederzeit von Hand überschreiben.
 
 Änderungen gelten sofort, einen Speichern-Knopf gibt es nicht. Wenn Rufzeichen oder Locator nicht gültig sind, meldet die App das mit einem gelben Band, und CQ rufen geht dann nicht.
 
-Darunter stellst du Sprache (Deutsch oder Englisch) und Darstellung (nach dem System, hell oder dunkel) ein. In der Karte **Automatik** legst du fest, ob die Auto-Antwort Stationen überspringt, die schon in deinem Log stehen: nur die von heute (UTC, die Vorgabe), alle aus dem ganzen Log oder keine. Dort stellst du auch ein, ob die App beim Antworten die Frequenz der Gegenstelle übernimmt oder deine eigene hält, und ob sie nach einem QSO aus deinem eigenen CQ weiter CQ ruft (mehr dazu bei „CQ rufen oder antworten“).
+Darunter stellst du Sprache (Deutsch oder Englisch) und Darstellung (nach dem System, hell oder dunkel) ein. In der Karte **Automatik** legst du fest, ob die Auto-Antwort Stationen überspringt, die schon in deinem Log stehen: nur die von heute (UTC, die Vorgabe), alle aus dem ganzen Log oder keine. Dort stellst du auch ein, ob die App beim Antworten die Frequenz der Gegenstelle übernimmt oder deine eigene hält, und ob sie nach einem QSO aus deinem eigenen CQ weiter CQ ruft (mehr dazu bei „CQ rufen oder antworten“). Außerdem kannst du wählen, ob die App einen **Anruf an dich** meldet: Kommt eine Nachricht an dein Rufzeichen, zeigt sie kurz „Anruf von …“, lässt das Handy vibrieren und setzt, solange die Seite im Hintergrund liegt, einen Punkt vor den Seitentitel. Der Ton bleibt absichtlich aus, das Mikrofon würde ihn hören.
 
 ![Die Karte Automatik](bilder/einstellungen-automatik.png "Die Karte Automatik in den Einstellungen.")
 
@@ -69,7 +69,7 @@ Jetzt das Thema, über das ich selbst gestolpert bin: FT8 arbeitet im 15-Sekunde
 
 Mein Test-PC ging einmal 18 Sekunden falsch. FT8 verzeiht vieles, aber keine 18 Sekunden.
 
-Deshalb gilt: Schalte am Gerät die automatische Uhrzeit ein (bei Android heißt das meist „Datum und Uhrzeit automatisch“). Die App stellt die Uhr deines Geräts **nie** um, das darf eine Web-App gar nicht. Sie arbeitet immer mit der Systemzeit.
+Deshalb gilt: Schalte am Gerät die automatische Uhrzeit ein (bei Android heißt das meist „Datum und Uhrzeit automatisch“). Die App stellt die Uhr deines Geräts **nie** um, das darf eine Web-App gar nicht. Sie arbeitet immer mit der Systemzeit. Den Takt der Aufnahme führt die App selbst nach: Aus der Ankunft der Mikrofonblöcke schätzt sie laufend den Startzeitpunkt der Aufnahme und gleicht so eine Verzögerung beim Start und die Abweichung zwischen Audiotakt und Systemuhr aus. Das DT der Gegenstellen wandert dadurch auch bei langen Sitzungen nicht weg.
 
 Was die App kann, ist nachsehen, ob die Uhr stimmt. Unter **Uhr** in den Einstellungen tippst du auf **Uhr prüfen**. Die App fragt dann den Server, von dem sie geladen wurde, neunmal nach der Uhrzeit und rechnet aus, wie weit dein Gerät danebenliegt. Du bekommst zum Beispiel „Uhr stimmt (Abweichung +0,1 s ± 0,1 s)“. Das „±“ ist die Messunsicherheit, die Prüfung ist also auf etwa ein Zehntel Sekunde genau, nicht auf die Millisekunde. Beim Start läuft die Prüfung einmal von allein, wenn du online bist.
 
@@ -106,9 +106,9 @@ Wenn es eine neue Version gibt, lädt die App sich von selbst neu, solange das M
 
 ## Die Oberfläche im Überblick
 
-Oben steht die Kopfzeile: links das Logo und der Name, in der Mitte die Weltzeit (UTC) mit Sekunden, rechts der **Profil-Chip**. Er zeigt, mit welchem Profil du gerade arbeitest, zum Beispiel „FT8 · 1500 Hz“. Ein Tipp darauf öffnet die Profil-Einstellungen. Wenn das Profil kein Standard-FT8 ist, heißt es dort „FT8-Variante“ und der Chip rutscht bei schmalen Bildschirmen in eine eigene Zeile.
+Oben steht die Kopfzeile: links das Menü-Symbol (☰) und der Name der aktuellen Seite, dann die Weltzeit (UTC) mit Sekunden und rechts der **Profil-Chip**. Er zeigt, mit welchem Profil du gerade arbeitest, zum Beispiel „FT8 · 1500 Hz“. Ein Tipp darauf öffnet die Profil-Einstellungen. Wenn das Profil kein Standard-FT8 ist, heißt es dort „FT8-Variante“ und der Chip rutscht bei schmalen Bildschirmen in eine eigene Zeile.
 
-Unten (auf breiten Bildschirmen links) steht die Navigation mit sieben Einträgen: **QSO**, **Codierung**, **Labor** und **Log** sind die vier Hauptziele. Hinter der Trennlinie liegen **Hilfe**, **Über** und **Einstell.**, die sich als eigene Seiten öffnen. Der aktive Eintrag ist rot hinterlegt. Ein Tipp auf den Eintrag der offenen Seite oder auf „Zurück“ bringt dich dorthin zurück, wo du vorher warst.
+Die Navigation liegt in einer **Schublade**: Ein Tipp auf das Menü-Symbol (☰) oben links schiebt sie von links herein, ein Tipp daneben oder die Taste Esc schließt sie. Ab 1100 Pixeln Breite (PC, Tablet quer) steht sie dauerhaft links, dann fehlt das Symbol. Oben in der Schublade siehst du das Ohr-Logo mit dem Namen. Darunter stehen sieben Einträge: **QSO**, **Codierung**, **Labor** und **Log** sind die vier Hauptziele. Hinter der Trennlinie liegen **Hilfe**, **Über** und **Einstellungen**, die sich als eigene Seiten öffnen. Der aktive Eintrag ist rot hinterlegt. Ein Tipp auf den Eintrag der offenen Seite oder auf „Zurück“ bringt dich dorthin zurück, wo du vorher warst.
 
 ![Die Navigation](bilder/navigation.png "Die Navigation: vier Ziele, Trennlinie, drei Seiten.")
 
@@ -116,7 +116,7 @@ Ob hell oder dunkel, bestimmst du in den Einstellungen. Im Dunkeln leuchtet das 
 
 ![Der QSO-Reiter im Dunkelmodus](bilder/qso-dunkel.png "Derselbe Reiter im Dunkelmodus.")
 
-Auf breiten Bildschirmen (Tablet quer, PC) steht die Navigation links, und Band-Aktivität und QSO-Fenster liegen nebeneinander. Auf schmalen Handys ist alles etwas kleiner (90 Prozent), damit mehr auf den Bildschirm passt.
+Auf breiten Bildschirmen (ab 1100 Pixeln, Tablet quer, PC) steht die Navigation dauerhaft links, und Band-Aktivität und QSO-Fenster liegen nebeneinander. Auf schmalen Handys ist alles etwas kleiner (90 Prozent), damit mehr auf den Bildschirm passt.
 
 ![Der QSO-Reiter auf einem breiten Bildschirm](bilder/qso-breit.png "Breite Ansicht: Navigation links, die beiden Listen nebeneinander.")
 
@@ -125,6 +125,8 @@ Auf breiten Bildschirmen (Tablet quer, PC) steht die Navigation links, und Band-
 ### Mikrofon, Bedienleiste und Pegel
 
 Im Reiter **QSO** schiebst du den **Mikrofon-Schalter** nach rechts. Der Browser fragt, ob die App das Mikrofon benutzen darf, und das muss sie, sonst hört sie nichts. Gleichzeitig bereitet die App die Tonausgabe vor, denn Browser spielen Töne nur ab, wenn man vorher irgendwo getippt hat.
+
+Welches Mikrofon und welchen Lautsprecher die App nimmt, stellst du in den Einstellungen unter **Audio** ein. Standard ist das Gerät, das dein System gerade benutzt. Ein Funkgerät mit USB-Audio (zum Beispiel IC-705), eine USB-Soundkarte oder ein virtuelles Audiokabel erscheint dort als eigenes Gerät. Die Namen zeigt der Browser erst, wenn du den Mikrofonzugriff einmal erlaubt hast, dafür gibt es den Knopf **Geräte anzeigen**. Das Mikrofon wechselt beim nächsten Einschalten, der Lautsprecher beim nächsten Ton. Ist das gewählte Gerät nicht angeschlossen, nimmt die App das Standardgerät und schreibt das ins QSO-Fenster. Den Lautsprecher kann Chrome umschalten, Firefox bisher nicht.
 
 Die App schaltet Echounterdrückung, Rauschunterdrückung und automatische Verstärkung des Geräts ab, soweit das Gerät es zulässt. Diese Helferlein sind für Telefonate gedacht und würden die FT8-Töne eher kaputtmachen. Außerdem hält sie den Bildschirm wach.
 
@@ -181,11 +183,11 @@ Rufst du CQ, läuft es so: Du sendest Tx6, jemand antwortet mit Tx1, du schickst
 
 Die Statuszeile über dem Pegelbalken sagt dir, wo du gerade stehst: „QSO: im QSO mit DL1ABC Tx3“ heißt, du bist im QSO mit DL1ABC und als Nächstes kommt Tx3. Das Fenster, in dem du sendest, ist das Gegenteil des Fensters der Gegenstation.
 
-Wenn die Gegenstelle nicht antwortet, wiederholt die App die Nachricht bis zu fünfmal. Das RR73 sendet sie bis zu dreimal, wenn das 73 ausbleibt. Danach gibt sie auf, bei RR73 mit dem Vermerk „unbestätigt“. Nach einem abgeschlossenen QSO sendet die App von sich aus nichts mehr. Sie ruft nicht heimlich weiter CQ, nur weil dir langweilig ist. Es sei denn, du hast in den Einstellungen unter **Automatik** „weiter CQ rufen“ gewählt, dann beginnt sie nach einem QSO aus deinem eigenen CQ wieder von vorn.
+Wenn die Gegenstelle nicht antwortet, wiederholt die App die Nachricht bis zu fünfmal. Das RR73 sendet sie bis zu dreimal, wenn das 73 ausbleibt. Danach gibt sie auf, bei RR73 mit dem Vermerk „unbestätigt“. Nach einem abgeschlossenen QSO sendet die App von sich aus nichts mehr. Sie ruft nicht heimlich weiter CQ, nur weil dir langweilig ist. Es sei denn, du hast in den Einstellungen unter **Automatik** „weiter CQ rufen“ gewählt, dann beginnt sie nach einem QSO aus deinem eigenen CQ wieder von vorn. Hat die Gegenstelle RR73 gesendet, ohne dass die App vorher einen Rapport von ihr gehört hat, schließt sie das QSO mit dem Vermerk „unbestätigt“ ab und sendet trotzdem das 73.
 
 Das QSO landet automatisch im **Log**, bestätigt oder unbestätigt. Mit **Stop** (ganz rechts, nur aktiv, solange du CQ rufst oder ein QSO läuft) stoppst du die Sendung und das QSO jederzeit.
 
-Zur Technik dahinter: Die App decodiert jedes Fenster zweimal, einmal früh (nach rund 13,7 Sekunden) und einmal am Ende (nach 15,05 Sekunden). Welche Nachricht sie als Nächstes sendet, entscheidet sie 0,4 Sekunden vor dem Sendefenster. In der Statuszeile steht hinterher, wie lange beide Durchgänge zuletzt gebraucht haben (`[ 520/ 610ms]`). Der späte Durchgang hält die Sendung nicht auf. Wird der frühe Durchgang erst mehr als eine Sekunde nach Fensterbeginn fertig, verpasst die Antwort ihr Fenster und geht 30 Sekunden später raus. In meinen Tests brauchte der Decoder auf dem Pixel 10a etwa 1,0 bis 1,3 Sekunden, auf dem alten Tablet 0,9 bis 1,5 Sekunden und am PC deutlich weniger. Das reicht, wenn nicht gleichzeitig noch ein zweiter Durchgang die Rechenzeit teilt.
+Zur Technik dahinter: Die App decodiert jedes Fenster zweimal, einmal früh (nach rund 13,7 Sekunden) und einmal am Ende (nach 15,05 Sekunden). Welche Nachricht sie als Nächstes sendet, entscheidet sie 0,4 Sekunden vor dem Sendefenster. In der Statuszeile steht hinterher, wie lange beide Durchgänge zuletzt gebraucht haben (`[ 520/ 610ms]`). Der späte Durchgang hält die Sendung nicht auf. Wird der frühe Durchgang erst mehr als eine Sekunde nach Fensterbeginn fertig, verpasst die Antwort ihr Fenster und geht 30 Sekunden später raus. In meinen Tests brauchte der Decoder auf dem Pixel 10a etwa 1,0 bis 1,3 Sekunden, auf dem alten Tablet 0,9 bis 1,5 Sekunden und am PC deutlich weniger. Das reicht, wenn nicht gleichzeitig noch ein zweiter Durchgang die Rechenzeit teilt. Bei Zeitfaktor 2 und höher prüft der frühe Durchgang nur die 30 besten Kandidaten, weil sonst die Fehlversuche zu viel Zeit kosten. Was dabei durchrutscht, findet der späte Durchgang und die Band-Aktivität markiert es mit „(spät)“. Der Takt der App kommt aus den Mikrofonblöcken und nicht nur aus einem Zeitgeber, so dass er auch weiterläuft, wenn der Browser die Seite im Hintergrund drosselt. Beim Start der Wiedergabe rechnet die App die Ausgabelatenz auch dann ein, wenn die Sendung schon verspätet beginnt.
 
 ## Profil: Zeit und Tonabstand
 
@@ -236,6 +238,8 @@ Das ist die Messung für alle, die wissen wollen, warum ihre Geräte sich bei DT
 ![Die Laufzeitmessung](bilder/laufzeit.png "Die Laufzeitmessung. Beispiel mit einer simulierten Schallstrecke.")
 
 Du bekommst den Median, die Streuung, die Zahl der gültigen Messungen und alle Einzelwerte. Dazu steht, was der Browser über seine eigenen Latenzen weiß. Das Ergebnis ist die Summe aus Ausgabe und Eingang, genau das, was später bei zwei gleichen Geräten als DT auftaucht. Unter 0,1 Sekunden ist es unkritisch, bis 0,5 Sekunden tragbar, darüber wird es zu viel.
+
+Bei einem Bluetooth-Lautsprecher kennt der Browser dessen Verzögerung oft nicht (meist 150 bis 300 Millisekunden). Dann trägst du in den Einstellungen unter **Audio** eine **Zusatzlatenz** ein: Die App sendet um diesen Wert früher. Rechne die gemessene Abweichung zum bisherigen Wert dazu und miss noch einmal. Nahe 0 ist gut. Das Mikrofon über Bluetooth ist keine gute Idee, es schaltet auf ein schmalbandiges Sprachprofil um.
 
 ### Verbindungstest mit einem zweiten Gerät
 
@@ -419,7 +423,7 @@ Unter **Über** findest du Version, Lizenz, Autor und Danksagungen noch einmal a
 
 **Lizenz:** FT8-Horch ist freie Software unter der GNU General Public License, Version 3 oder neuer. Den Quelltext darfst du lesen, ändern und weitergeben, solange das unter derselben Lizenz geschieht.
 
-**Datenschutz:** Alle Daten bleiben auf deinem Gerät. Es gibt keine Konten und keine Auswertung. Die einzige Anfrage, die die App stellt, ist die Frage an den eigenen Server nach der Uhrzeit bei der Zeitprüfung. Dein Log und das Protokoll liegen im Speicher des Browsers und verlassen das Gerät nur, wenn du sie exportierst.
+**Datenschutz:** Alle Daten bleiben auf deinem Gerät. Es gibt keine Konten und keine Auswertung. Die einzige Anfrage, die die App stellt, ist die Frage an den eigenen Server nach der Uhrzeit bei der Zeitprüfung. Dein Log und das Protokoll liegen im Speicher des Browsers und verlassen das Gerät nur, wenn du sie exportierst. Eine Content-Security-Policy in der Seite erlaubt der App ausschließlich Verbindungen und Inhalte vom eigenen Ursprung, ein Nachladen aus dem Netz ist technisch ausgeschlossen.
 
 **Danksagung:** FT8 stammt von Joe Taylor (K1JT), Steve Franke (K9AN) und Bill Somerville (G4WJS) und ist Teil von WSJT-X. Die Konstanten der App (Costas-Muster, Gray-Code, LDPC-Matrizen) stammen von dort und kamen über ft8_lib von kgoba (MIT-Lizenz) zu mir. Die Schrift ist Roboto, der Titel oben steht in Montserrat Alt1 (beide SIL Open Font License), die Symbole sind Material Symbols (Apache-Lizenz 2.0). Die Farben (neutrales Grau mit dem Rot `#c0001a`) berechnet ein kleines Skript im Quelltext, es braucht keine Bibliothek.
 
